@@ -1,0 +1,65 @@
+git:
+    - git is software
+    - hya shivai apan git manage karu shakat nahi
+    - only runs in cmd
+    - we cannot manage and perform git operations on the code
+
+github:
+    - github is a website
+    - as it is a website form on managing the git
+    - as it is a website we can work on any web browser
+    - as it is (git) hub we need git installed
+
+1] Git Installation
+2] Create Account allready have an account
+3] Understanding Github
+    - New Repository (done)
+    - History (done)
+    - Github Issues Section (done)
+    - Command Line Inerface (done)
+    - Branches (done)
+    - Github Pages
+    - Fork
+
+
+Meanings of github Words:-
+
+    New Repository --> New Folder
+
+    History --> Can view the changes done in the repo with the date and time
+
+    Commit --> Save
+
+    Fork --> Complete Copy
+
+    Github Issues --> Complaint
+
+
+
+Work Done:
+    - created a new repo
+    - learnt history
+    - learnt to collaborate with other person / email
+    - pull request - lets us inform the collaborators about the changes done in the branch
+    - dispute / conflict - when same file in two different branches have different context and you ask for a pull request. so to resolve the dipute and then pull the files to the main branch
+    - created a new repo viz throughterminal started the git process in the cmd
+
+
+
+Git process through terminal:
+    - git init - start the git process
+    - git status - list of all the files and folder not informed and not given the permission to add in the repo
+    - git commit -m "write your message here" - save changes by using this
+    - git remote add origin 'github repo link' - set up the link to repo in which you are going to commit the files and folders
+    - git pull origin master - to check if we are upto date
+    - git push -u origin branch_name - push the files and changes in the desired branch
+
+
+Learnt Points: 
+    - New Repo (done)
+    - History (done)
+    - branches [imp] (done)
+    - through terminal (done)
+    - git commands (done)
+    - M in vsc modified
+    - U in vsc untracked
