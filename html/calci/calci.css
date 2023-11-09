@@ -49,26 +49,26 @@
 .buttons-holder
 {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
 
-button
+.button-design
 {
     width: 50px;
     height: 50px;
     margin: 7px;
     font-size: 17px;
     font-weight: 500;
-    outline: unset;
     border-radius: 7px;
     box-shadow: 10px 6px 5px rgba(63, 63, 63, 0.355);
     transition: all .5s ease-in-out;
+    text-align: center;
 }
 
-button:hover,
-button:focus
+.button-design:hover,
+.button-design:focus
 {
     background-color: #44e320;
 }
@@ -78,7 +78,8 @@ button:focus
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    text-align: center;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .delete-btn
@@ -90,6 +91,9 @@ button:focus
 .number-btn
 {
     background-color: rgb(39, 190, 224);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .operation-btn

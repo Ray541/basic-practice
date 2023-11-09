@@ -1,6 +1,6 @@
 const display = document.querySelector("#display");
 
-
+// display.setAttribute("readonly", true)
 
 // Arrow function to display the numbers and the symbols
 
@@ -28,9 +28,13 @@ calculate = () =>{
         var currentValue = display.value
         var result = eval(currentValue)
         display.value = result
-        if(isNaN(result))
+        if(isNaN(result) || isFinite(result))
         {
             display.value = ""
+        }
+        else
+        {
+            display.value = "Error"
         }
     }
     catch(error)
@@ -38,3 +42,35 @@ calculate = () =>{
         display.value = "Error"
     }
 }
+
+// Display all the buttons dynamically
+
+const btnHolder = document.querySelector(".buttons-holder")
+
+const buttonValues = ["7", "8", "9", "/", "4", "5", "6", "x", "1", "2", "3", "-", "0", ".", "=", "+"];
+
+buttonValues.forEach(value => {
+    var button = document.createElement("button")
+
+    button.setAttribute("class", "number-btn button-design")
+    button.onclick = () => displayValue(value)
+    button.textContent = value
+    btnHolder.appendChild(button)
+
+    if(value == "/" || value == "-" || value == "+")
+    {
+        button.setAttribute("class", "button-design operation-btn")
+    }
+
+    if(value == "=")
+    {
+        button.setAttribute("class", "button-design delete-btn")
+        button.onclick = () => calculate()
+    }
+
+    if(value == "x")
+    {
+        button.onclick = () => displayValue("*")
+        button.setAttribute("class", "button-design operation-btn")
+    }
+})
