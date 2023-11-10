@@ -27,14 +27,13 @@ calculate = () =>{
     {
         var currentValue = display.value
         var result = eval(currentValue)
-        display.value = result
-        if(isNaN(result) || isFinite(result))
+        if(isNaN(result))
         {
             display.value = ""
         }
         else
         {
-            display.value = "Error"
+            display.value = result
         }
     }
     catch(error)
