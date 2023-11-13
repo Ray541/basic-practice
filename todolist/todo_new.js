@@ -6,6 +6,12 @@ console.log('No todo loaded');
 var input = document.querySelector('.task-input');
 var list = document.querySelector('.list');
 
+// {
+//     task:name,
+//     id: 123
+// }
+const generateId = () => 'id' + new Date().getTime();
+
 /**
  * Add todo
  */
@@ -18,13 +24,15 @@ const addTask = () => {
    * Add task to list
    */
   const liElement = document.createElement('li');
+  const id = generateId();
 
   liElement.className = 'task';
+  liElement.id = id;
   liElement.innerHTML = `
   <p class="task-name ">${value}</p>
   <div class="actions">
-      <i class="bi bi-clipboard-check completed-task" onclick="toggleStatus(event)"></i>
-      <i class="bi bi-trash2-fill delete-task" onclick="deleteTask(event)"></i>
+      <i class="bi bi-clipboard-check completed-task" onclick="toggleStatus('${id}')"></i>
+      <i class="bi bi-trash2-fill delete-task" onclick="deleteTask('${id}')"></i>
   </div>`;
 
   list.appendChild(liElement);
@@ -33,20 +41,6 @@ const addTask = () => {
   input.value = '';
 };
 
-/**
- * @description Deletes the tasks from dom
- * @param e - Click Event
- */
-const deleteTask = e => {
-  // Get the parent <li> element and remove it
-  const taskElement = e.target.parentElement.parentElement;
-  if (taskElement) {
-    taskElement.remove();
-  }
-};
+const deleteTask = id => document.getElementById(id).remove();
 
-const toggleStatus = e => {
-  // Get the parent <li> element and toggle the 'done' class
-  const taskElement = e.target.parentElement.parentElement;
-  taskElement.classList.toggle('done');
-};
+const toggleStatus = id => document.getElementById(id).classList.toggle('done');
