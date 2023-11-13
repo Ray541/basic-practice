@@ -10,6 +10,7 @@ var list = document.querySelector('.list');
 //     task:name,
 //     id: 123
 // }
+
 const generateId = () => 'id' + new Date().getTime();
 
 /**

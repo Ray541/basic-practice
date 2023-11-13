@@ -1,75 +1,103 @@
-/* 
----> Hey, I tried to clean up the code as you mentioned. I have comented out the 
-strike function as I understood that if we use the const keyword every other 
-task gets it's own function and performs the desired task.
+var input = document.querySelector(".task-input");
+const addBtn = document.querySelector(".add-task");
+var list = document.querySelector(".list");
 
----> 
- */
+const getLocalStorageData = () => {
+  /**
+   * check if there is any todo task
+   * if null then create a new todo array
+   * else pass it to the array viz todo
+   */
+  return localStorage.getItem("todo") === null
+    ? []
+    : JSON.parse(localStorage.getItem("todo"));
+};
 
-var input = document.querySelector(".task-input")
-var list = document.querySelector(".list")
+let todoList = getLocalStorageData();
 
+document.addEventListener("DOMContentLoaded", retriveData);
 
-addTask = () => {
-    if(input.value === "")
-    {
-        alert("Right Something...")
-        // Will display an allet if there is nothing typed in the input
-    }
-    else
-    {
-        
-        var task = document.createElement("li")
+const genreateID = () => "task" + new Date().getTime();
 
-        task.setAttribute("class", "task")
-        
-        var taskName = document.createElement("p")
-        taskName.setAttribute("class", "task-name")
-        taskName.textContent = `${input.value}`
-        console.log(input.value)
+const addTask = () => {
+  const text = input.value;
 
-        task.append(taskName)
-        // task.innerHTML = `<p class="task-name">${input.value}</p>
-        // A p tag will be appended to the task li
-        
-        var taskdiv = document.createElement("div")
-        taskdiv.setAttribute("class", "actions")
-        
-        task.append(taskdiv)
-        // taskdiv.innerHTML = `<div class="actions"></div>`
-        // A div with class actions will be appended to the task li
-        
-        var completeButton = document.createElement("i")
-        completeButton.setAttribute("class", "bi bi-clipboard-check completed-task")
-        completeButton.onclick = () => completeAction()
-        taskdiv.append(completeButton)
+  if (todoList.findIndex((task) => task.text == text) != -1) {
+    input.value = "";
+    return alert("Task already exists");
+  }
 
-        // An icon with onclick function completeAction() will be appended to the div
-        
-        var deleteButton = document.createElement("i")
-        deleteButton.setAttribute("class", "bi bi-trash2-fill delete-task")
-        deleteButton.onclick = () => deleteAction()
-        taskdiv.append(deleteButton)
-        
-        // An icon with onclick function deleteAction() will be appended to the div
+  let task = document.createElement("li");
+  task.id = genreateID();
 
-        list.appendChild(task)
-        // saveTask(input.value)
-        input.value = ""
-    }
+  task.className = "task";
 
-    const completeAction = () => {
-        // strike()
-        var taskName = task.querySelector(".task-name")
-        taskName.classList.toggle("done")
-    }
+  task.innerHTML = `
+    <p class="task-name">${input.value}</p>
+    <div class="actions">
+        <i class="bi bi-clipboard-check completed-task" onclick="completedTask('${task.id}')"></i>
+        <i class="bi bi-trash2-fill delete-task" onclick="deleteTask('${task.id}')"></i>
+    </div>`;
 
-    // const strike = () => {
-    //     var taskName = task.querySelector(".task-name")
-    //     taskName.classList.toggle("done")
-    // }
+  list.append(task);
+  saveData(task.id);
+  input.value = "";
+};
 
-    const deleteAction = () => {
-        task.remove()
-    }
+const completedTask = (id) => {
+  const taskIndex = todoList.findIndex((item) => item.id === id);
+
+  todoList[taskIndex].completed = !todoList[taskIndex].completed;
+
+  localStorage.setItem("todo", JSON.stringify(todoList));
+
+  retriveData();
+};
+
+const deleteTask = (id) => {
+  const task = document.getElementById(id);
+  task.remove();
+  removeLocalData(id);
+};
+
+const saveData = (taskid) => {
+  const newTask = {
+    id: taskid,
+    text: input.value,
+    completed: false,
+  };
+
+  todoList.push(newTask);
+  localStorage.setItem("todo", JSON.stringify(todoList));
+};
+
+function retriveData() {
+  list.innerHTML = "";
+  todoList.forEach((storedTask) => {
+    let task = document.createElement("li");
+    task.className = "task";
+    task.id = storedTask.id;
+    task.innerHTML = `
+        <p class="task-name ${storedTask.completed ? "done" : ""}">${
+      storedTask.text
+    }</p>
+        <div class="actions">
+            <i class="bi bi-clipboard-check completed-task" onclick="completedTask('${
+              storedTask.id
+            }')"></i>
+            <i class="bi bi-trash2-fill delete-task" onclick="deleteTask('${
+              storedTask.id
+            }')"></i>
+        </div>`;
+    list.append(task);
+  });
 }
+
+removeLocalData = (id) => {
+  const taskIndex = todoList.findIndex((task) => {
+    return task.id == id;
+  });
+  todoList.splice(taskIndex, 1);
+  //update the todo array
+  localStorage.setItem("todo", JSON.stringify(todoList));
+};
