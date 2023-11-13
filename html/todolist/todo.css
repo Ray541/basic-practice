@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* font-family: 'Kanit', sans-serif; */
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+::-webkit-scrollbar
+{
+    width: 5px;
+    background-color: rgba(0, 0, 0, 0.493);
+}
+
+::-webkit-scrollbar-thumb
+{
+    width: 5px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.479);
+}
+
+.main
+{
+    width: 100%;
+    height: 100vh;
+    color: rgba(255, 255, 255, 0.822);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.main > h1
+{
+    font-size: 40px;
+    font-weight: 200;
+    position: absolute;
+    top: 25%;
+}
+
+.input-holder
+{
+
+    position: absolute;
+    top: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.task-input
+{
+    outline: unset;
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 5px 10px;
+    color: white;
+    font-weight: 400;
+    letter-spacing: .5px;
+    border-radius: 1px;
+}
+
+.add-task
+{
+    outline: unset;
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 5px 10px;
+    color: white;
+}
+
+.add-task:hover,
+.add-task:focus
+{
+    background-color: white;
+    color: black;
+}
+
+.task-input:focus
+{
+    background-color: rgb(97, 97, 97);
+    color: white;
+}
+
+.list
+{
+    position: absolute;
+    top: 40%;
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: scroll;
+    list-style: none;
+}
+
+.task
+{
+    /* width: 100%; */
+    background-color: rgba(255, 255, 255, 0.178);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 1px;
+    padding: 5px 15px;
+    margin: 10px;
+}
+
+.task:hover
+{
+    background-color: gray;
+    color: black;
+}
+
+.task-name
+{
+    margin: 0 !important;
+    width: 80%;
+    letter-spacing: .5px;
+}
+
+.done
+{
+    text-decoration: line-through;
+}
+
+.actions
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+i
+{
+    font-size: 17px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.completed-task:hover
+{
+    color: greenyellow;
+}
+
+.delete-task:hover
+{
+    color: rgb(255, 0, 106);
+}
