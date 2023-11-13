@@ -42,6 +42,7 @@ const addTask = () => {
   list.append(task);
   saveData(task.id);
   input.value = "";
+  input.focus();
 };
 
 const completedTask = (id) => {
