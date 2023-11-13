@@ -5,8 +5,8 @@ var list = document.querySelector(".list");
 const getLocalStorageData = () => {
   /**
    * check if there is any todo task
-   * if null then create a new todo array
-   * else pass it to the array viz todo
+   * if null then return blank array
+   * else return data stored in local storage
    */
   return localStorage.getItem("todo") === null
     ? []
@@ -99,6 +99,6 @@ removeLocalData = (id) => {
     return task.id == id;
   });
   todoList.splice(taskIndex, 1);
-  //update the todo array
+  //update the todoList array
   localStorage.setItem("todo", JSON.stringify(todoList));
 };
