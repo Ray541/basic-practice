@@ -1,0 +1,188 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gilroy";
+}
+
+body {
+  background-color: #81ecec;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 4px;
+  height: 40px;
+  background-color: white;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.list {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.note {
+  width: 300px;
+  height: 300px;
+  background: #fff;
+  margin: 60px;
+  position: relative;
+}
+
+.note::after {
+  position: absolute;
+  top: 0;
+  left: -30px;
+  content: "";
+  width: 30px;
+  padding: 10px 25px;
+  background-color: #f0f0f0;
+  transform: rotate(145deg);
+}
+
+.header {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  background-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+i {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.save:hover,
+.save:focus {
+  color: rgb(121, 39, 197);
+}
+
+.delete:hover,
+.delete:focus {
+  color: red;
+}
+
+.message {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  outline: unset;
+  border: 0.5px solid #c4c4c4;
+  padding: 5px;
+  font-size: 15px;
+  background-color: rgb(252, 252, 107);
+}
+
+#add-notes {
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 30px;
+  padding: 10px 15px;
+  font-size: 15px;
+  background-color: #141414;
+  color: #fffeef;
+  border-radius: 5px;
+  outline: unset;
+  border: unset;
+}
+
+.snack-bar
+{
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 10px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    background-color: black;
+    color: whitesmoke;
+    border-right: 4px solid rgb(252, 252, 107);
+    transform: translateX(5px);
+    visibility: visible;
+}
+
+@media (width > 319px) and (width <= 425px) {
+  .main {
+    position: relative;
+  }
+
+  .note {
+    width: 250px;
+    height: 250px;
+    background: #fff;
+    margin: 40px;
+  }
+
+  .note::after {
+    position: absolute;
+    top: 0;
+    left: -25px;
+    content: "";
+    width: 30px;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    transform: rotate(145deg);
+  }
+
+  #add-notes {
+    top: 1%;
+    right: 30px;
+    padding: 7px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #add-notes i {
+    font-size: 15px;
+    margin-right: 5px;
+  }
+}
+
+@media (width > 426px) and (width <= 768px) {
+  #add-notes {
+    top: 1%;
+    right: 15px;
+    padding: 7px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #add-notes i {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+}
