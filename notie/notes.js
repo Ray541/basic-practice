@@ -37,6 +37,8 @@ const addNote = (text = "") => {
 const deleteNote = (id) => {
   document.getElementById(id).remove();
   saveNote();
+  // To reduce the count if clicked on Delete Note Button
+  noteCount--;
 };
 
 const saveNote = () => {
@@ -47,17 +49,26 @@ const saveNote = () => {
     data.push(note.value);
   });
 
+  /**check if data array empty then remove the notes array from locl storage
+   * else set data array in the local storage and push the note into it
+   */
   data.length === 0
     ? localStorage.removeItem("notes")
     : localStorage.setItem("notes", JSON.stringify(data));
 };
 
-(function () {
+const retriveData = () => {
   const lsmessage = JSON.parse(localStorage.getItem("notes"));
 
+  /**check if lsmessage is empty then add a new empty note
+   * else display the data that is in the local storage
+   */
   lsmessage === null
     ? addNote()
     : lsmessage.forEach((lsnote) => {
         addNote(lsnote);
       });
-})();
+};
+
+/**Called the retriveData function on every reload */
+window.addEventListener('DOMContentLoaded', retriveData);

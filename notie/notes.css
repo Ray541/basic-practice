@@ -50,13 +50,30 @@ body {
 
 .note::after {
   position: absolute;
-  top: 0;
+  top: -10px;
   left: -30px;
   content: "";
+  background-image: url(./tape.png);
+  background-position: center;
+  background-size: cover;
   width: 30px;
-  padding: 10px 25px;
-  background-color: #f0f0f0;
-  transform: rotate(145deg);
+  height: 50px;
+  padding: 15px 25px;
+  transform: rotate(75deg);
+}
+
+.note::before {
+  position: absolute;
+  bottom: -70px;
+  right: -25px;
+  content: "";
+  background-image: url(./tape.png);
+  background-position: center;
+  background-size: cover;
+  width: 30px;
+  height: 50px;
+  padding: 15px 25px;
+  transform: rotate(75deg);
 }
 
 .header {
@@ -66,7 +83,7 @@ body {
   background-color: #c4c4c4;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .actions {
@@ -116,20 +133,19 @@ i {
   border: unset;
 }
 
-.snack-bar
-{
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    padding: 10px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    background-color: black;
-    color: whitesmoke;
-    border-right: 4px solid rgb(252, 252, 107);
-    transform: translateX(5px);
-    visibility: visible;
-}
+/* .snack-bar {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background-color: black;
+  color: whitesmoke;
+  border-right: 4px solid rgb(252, 252, 107);
+  transform: translateX(5px);
+  visibility: visible;
+} */
 
 @media (width > 319px) and (width <= 425px) {
   .main {
@@ -141,17 +157,6 @@ i {
     height: 250px;
     background: #fff;
     margin: 40px;
-  }
-
-  .note::after {
-    position: absolute;
-    top: 0;
-    left: -25px;
-    content: "";
-    width: 30px;
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    transform: rotate(145deg);
   }
 
   #add-notes {
