@@ -6,5 +6,11 @@ const url =
 const getJoke = () => {
   fetch(url)
     .then((raw) => raw.json())
-    .then((data) => (joke.innerHTML = `${data.joke}`));
+    .then((data) => {
+      if (data.joke === undefined) {
+        return (joke.innerHTML = "Click Again!!!");
+      } else {
+        return (joke.innerHTML = `${data.joke}`);
+      }
+    });
 };
