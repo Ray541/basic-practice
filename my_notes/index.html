@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #141414;
+      }
+      .main {
+        width: 100%;
+        height: auto;
+        color: #c4c4c4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .display {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        font-size: 17px;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="main">
+      <p class="display"></p>
+    </section>
+    <script>
+        async function getData() {
+          var raw = await fetch('https://demon-slayer-api.onrender.com/v1/');
+          var data = await raw.json();
+
+          const display = document.querySelector(".display");
+          display.innerHTML = data.map( name => `Name: ${name.name}</br> Image: ${name.image}</br> Url: ${name.url}</br></br>`);
+
+          console.log(data);
+        }
+
+    //   const apiUrl = "https://demon-slayer-api.onrender.com/v1/";
+
+    //   // Using the fetch method to make a GET request
+    //   fetch(apiUrl)
+    //     .then((response) => {
+    //       // Check if the request was successful (status code 200)
+    //       if (!response.ok) {
+    //         throw new Error(
+    //           `Network response was not ok, status code: ${response.status}`
+    //         );
+    //       }
+    //       // Parse the JSON data from the response
+    //       return response.json();
+    //     })
+    //     .then((data) => {
+    //       // Handle the retrieved data
+    //       console.log("Data:", data);
+    //       // You can do more processing or display the data as needed
+    //     })
+    //     .catch((error) => {
+    //       // Handle errors during the fetch operation
+    //       console.error("Error during fetch:", error);
+    //     });
+
+      getData();
+    </script>
+  </body>
+</html>

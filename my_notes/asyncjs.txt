@@ -1,0 +1,109 @@
+ - what is js sync or async?
+-->     js is sync -> means code runs in a perticular sequence
+        it blocks the flow of the program
+        reads file sync
+        here only one task will execute at a time and after the completion of that task other tasks will be executed
+
+ - what is async?
+-->     here more than one task executes at the same time this will save the time and the performance gets increased
+
+ - filter()
+-->     filter is a javascript uses callback functions which is used to return the value
+        we can store the values in a variable and then log it.
+        we have to use return keyword if we use the {} if not we can write it directly
+
+ - chaining?
+-->     map().map().filter();
+        This is called as chaining.
+
+        eg:-
+            var A = [1, 2, 3, 4, 5];
+            console.log(`Main array ${A}`);
+            console.log(
+                A.map((squaredA) => squaredA * squaredA).filter(
+                    (evenNo) => evenNo % 2 !== 0) //we can use the same name to be consistent
+            );
+
+        Here in the above example there is chaining of map() and filter() functions
+
+ - map()
+-->     map is a higher order function by using we can transform an array and return the result into another array.
+        map does not change the original array
+
+        eg:-
+        const people = 
+        [
+            {
+            firstname: "Pranav",
+            lastname: "Rao",
+            },
+            {
+            firstname: "Vedang",
+            lastname: "Kulkarni",
+            },
+        ];
+            const fullname = people.map( name => [name.firstname +" "+ name.lastname].join());console.log(fullname);
+        The above code will return the nmaes concatinated and every object will be joined to the updated array using join()
+
+ - reduce()
+-->     it is an other array method.
+        accumulator : stores the result of the previous iteration
+        currentValue : the current value in the array
+        initialValue : as the name suggests its the initial value
+
+        const numbers = [1, 2, 3, 4, 5];
+
+        const product = numbers.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+        console.log(product);
+
+ - setTimeout
+   setInterval
+   promises
+   fetch
+   axios
+If we use the above topics in js code then that lines of code is async js
+
+
+ - what is event loop?
+-->     event loop brings the det of code form side stack to the main stack
+    first main stack code will get executed and then the side stack code will be executed
+
+ - callback?
+-->     function that takes a function as a parameter like setTimeout, setInterval, Promise, map, filter
+
+ - Promise?
+-->     a promise is a constructor object so it needs the new keyword in it so as to get defined. it has two parameters one resolve and other is reject. once the code producing code executes and gets some result it will then it wil go to the consuming code which will then take the result and the act if there are errors it will got to the reject function and then the catch block will get executed and if there is no any errors then the result will get into the resolve function and the then block will get executed.
+
+var a = promise((resolve, reject) => {
+    if true
+        return resolve();
+    else
+        rerurn reject();
+})
+
+a
+.then( () => {
+    console.log("if true and control is in resolve and has no errors")
+})
+.catch( () => {
+    console.log("if false and control is in reject and has errors")
+})
+
+ - async / await?
+-->     to save from .then we use async await
+
+
+ - js --> promise, setTimeout, setInterval
+ - react --> fetch, setTimeout, setInterval
+
+concurrency =>
+    in js sync code and async code executes simultaniously.
+    this is bacause of main stack and the sie stack.
+
+parallelism =>
+    it deals with cores of the processor like dual core, octa core, etc.
+    so we can achieve parallelism by executing the same code on mutiple cores
+    each core have a single thread execution
+
+throttling =>
+    control the number of times the code gets executed i guess we can use setInterval method to achieve this.

@@ -1,0 +1,123 @@
+difference between var, let and const
+
+var -->
+    var is function scoped and is in ES5 version of Js
+    var adds itself to the window object
+
+
+let and const -->
+    let and const is braces scoped and is in the ES6 version of Js
+    let and const does not add itself to the window object
+
+we can use stuff which is not in JavaScript language but but we can use it in the form of a perticular object called as a window which is the browser
+For example - alert(), prompt(), console
+
+ - what is window object??
+-->     window object is the things which is provided by the browser
+
+ - what is browser context API?
+-->    window, stack and heap memory
+
+ - stack?
+-->     stack like the other programming language
+        example :- given perform a, b, b, d and eg
+        stack :- | e |
+                 | d |
+                 | c |
+                 | b |
+                 | a |
+                 ----
+
+ - heap memory?
+-->     the data which we get in a the process of finding out the final output that intermediate data id stored in the heap memoery
+
+    example:-
+        1+2+3+4+5 = 15
+         |
+         3 <--- Intermediate Data
+                        |
+                        |---stored in
+                        |
+                    Heap Memoery
+
+
+ - execution context & lexical environment?
+-->     execution contexte is the imaginary container which holds the variables, functons etc in it.
+
+function area()
+{
+    var a = 5;
+    function def()
+    {
+        var b= 10;
+    }
+}
+    --------------------------
+    |                        |
+    |  a                     |
+    |             def()      |
+    |                        |
+    |                        |
+    |      |      |          |
+    |      |  LE  |          |
+    |      |      |          |
+    --------------------------
+        Fig:- Execution
+            Context
+
+
+ - How to copy reference values?
+-->     var a = [1, 2, 3, 4, 5];
+        var b = [...a];
+
+this ... three dots is the spread operator by using the spread operator we can copy the value in the form of a reference
+
+ - what is truty and falsy?
+--> falsy ==> 0 false null undefined NaN document.all
+    truty ==> any other value than falsy
+
+ - loops?
+-->     forEach():-
+            works only with array
+            it does not return any value
+        
+        eg:- 
+            var a = [1, 2, 3, 4, 5];
+            a.forEach((value) => {
+                console.log(value * 2);
+            });
+
+            forEach or changes the copy of the main array. So the main array will not get changed
+
+        forIn():-
+            object pr chalta hai
+
+        eg:-
+            var person = {
+                name : "abc",
+                age : 0
+            }
+
+            person.forIn(var key in person)
+            {
+                console.log(key);
+            }
+
+ - callback function?
+-->     setTimeout( function() => {
+            console.log("three seconds ke baad chala");
+        }, 3000) 
+
+callback function is a part of async JavaScript
+
+ - what is first class functions?
+-->     meaning of first class function is that we can treat the functions like variable in javascript.
+
+    eg:-
+        function abc(e){
+            e();
+        }
+        abc(function(){console.log("This is first class array because we have passed it in a varaiable i.e in e which is a parameter variable");})
+
+ - Higher order functions?
+-->     HOF is function that accepts another function as a parameter

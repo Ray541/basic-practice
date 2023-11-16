@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Changer</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="textchanger.css" />
+  </head>
+  <body>
+    <section class="main col-lg-12">
+      <h1 class="mb-4">Text Changer</h1>
+      <textarea
+        name="input"
+        id="input"
+        class="input"
+        placeholder="Type here..."
+      ></textarea>
+
+      <div class="actions">
+        <button class="reset" onclick="resetInput()">Reset</button>
+        <button class="uppercase" onclick="upperCase()">Uppercase</button>
+        <button class="lowercase" onclick="lowerCase()">Lowercase</button>
+        <button class="italic" onclick="italicCase()">Italic</button>
+        <button class="italic" onclick="boldCase()">Bold</button>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

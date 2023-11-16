@@ -1,0 +1,136 @@
+words and keyword - 
+    --words - anything that have no meaning in js is a simple words
+        eg - eleven, ray, something
+    --keyword - anything that have meaning in js is a keyword
+        eg - for, var, while, is
+
+
+variable and constants - 
+    --variable - used to store values in js but can be changed over the time
+    --constant - used to store some value but is constant in the whole program
+
+[Advanced] difference in var let and const
+    -old js i.e ES5 var     vs      -new js i.e ES6 let and const
+    -functional scope               -braces scope
+    -adds window object             -doens't add window object
+
+
+hoisting - 
+    variable and functions are hoisted means the variable declaration is moved to the top of the code
+
+
+types in js -
+    1] primitive :- number, string, boolean, undefined, null
+
+    2] reference :- [] - array, () -, {} - object
+
+1] primitive type eg -
+    number - var a = 10;
+    string - var s = "Ray"
+    boolean - var b = true/false
+    undefined - var x
+    null - var y = null
+
+2] reference type eg - 
+    array - var fruits = ["grapes", "mango", "pineapple"]
+    object - var person = 
+    {
+        name: "Ray",
+        age: "22"
+    }
+
+conditionals:- if else else-if
+
+if that then 
+    something
+else 
+    something else
+
+if
+{
+    something
+}
+else if(condition)
+{
+    other thing
+}
+else
+{
+    some other thing
+}
+
+
+Loops :- for, while, 
+[must know but latter] foreach, forin, forof, do-while
+repeat same line of code we use loop
+
+
+Functions:- 
+    used for mainly three tasks:- 
+        1)when we want to run some code latter
+        2)when we want to reuse some code
+        3)when we want to run with some different data every other time
+
+function areaOfSquare
+{
+    get the side of square
+    return formula
+}
+
+paramenters:- it is a variable in which we can pass the values to function in the form of value
+eg- areaofRectangle(length, width)
+
+argument:- the real value passed in the parameter
+eg- areaofRectangle(2, 3)
+
+
+array - We can store multipe values. its group of values under one variable name
+
+var number = [1, 2, 3, 4, 5]
+
+
+index        0  1  2  3  4
+var number= [1, 2, 3, 4, 5]
+
+
+push, pop, unshift, shift
+
+push(6) - add element at last
+pop(5) - remove element from last
+unshift(6) - add element in start
+shift(5) - add element in end
+splice(2, 2) - remove elements form anywhere
+
+
+Object:- store information in key value pair
+
+syntax:- 
+
+    var object_name =
+    {
+        property/prop : "value"
+    }
+
+empty object :
+    var a = {}
+
+object with values :
+    var person = 
+    { 
+        name: "Ray",
+        age: "22",
+        github: "Ray541"
+    }
+
+    var bike =
+    {
+        name: "H2",
+        color: "Metal Black",
+        price: "72,000,00"
+    }
+
+we can also have functions and arrays as a properties also. a function in the object is called as method
+
+update property:-
+
+    bike.name = "H2R"
