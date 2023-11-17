@@ -6,7 +6,7 @@ const search = document.querySelector(".search-btn");
 const result = document.querySelector(".result");
 
 const getWeather = () => {
-  var city = input.value;
+  var city = input.value.trim();
 
   // if the city input text is empty
   if (city === "") {
