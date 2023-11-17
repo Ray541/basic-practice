@@ -148,6 +148,7 @@ button:focus {
 }
 
 .city-name {
+  text-align: center;
   color: white;
   font-size: 30px;
   text-transform: uppercase;
