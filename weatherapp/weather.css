@@ -1,0 +1,285 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #4689f3;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.heading {
+  position: absolute;
+  top: 3px;
+  left: 20px;
+  color: #dadada;
+  font-size: 50px;
+}
+
+.display {
+  height: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 2px solid rgba(192, 192, 192, 0.171);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.089);
+}
+
+.shape1,
+.shape2 {
+  filter: blur(1px);
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.shape1 {
+  width: 100px;
+  height: 100px;
+  top: -40px;
+  right: -40px;
+}
+
+.shape2 {
+  width: 130px;
+  height: 130px;
+  bottom: -50px;
+  left: -50px;
+}
+
+.input-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+::placeholder {
+  color: white;
+}
+
+input {
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: unset;
+  border: unset;
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 19px rgba(0, 0, 0, 0.089);
+  color: whitesmoke;
+  font-weight: 400;
+  font-size: 15px;
+  border: 1px solid rgba(192, 192, 192, 0.171);
+  text-transform: capitalize;
+}
+
+input:focus {
+  background-color: rgba(245, 245, 245, 0.616);
+  color: black;
+}
+
+button {
+  overflow: hidden;
+  position: relative;
+  font-size: 15px;
+  padding: 5px 10px;
+  outline: unset;
+  border: unset;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  box-shadow: 1px 1px 19px rgba(0, 0, 0, 0.089);
+  transition: all 0.2s ease;
+  background-color: transparent;
+  background-color: rgba(245, 245, 245, 0.616);
+  color: #e02323;
+}
+
+button:hover,
+button:focus {
+  background-color: rgba(245, 245, 245, 0.877);
+}
+
+.enter-city {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: aliceblue;
+  text-transform: uppercase;
+}
+
+.result {
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.wrong-city {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: #e02323;
+}
+
+.city-name {
+  color: white;
+  font-size: 30px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.weather-icon {
+  font-size: 50px;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.089));
+}
+
+.weather-description {
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin: 5px;
+  color: whitesmoke;
+  text-transform: capitalize;
+}
+
+.weather-main {
+  font-weight: 600;
+  font-size: 20px;
+  background-color: rgba(245, 245, 245, 0.877);
+  border-radius: 4px;
+  padding: 5px 20px;
+  margin: 10px 0;
+  box-shadow: 1px 1px 19px rgba(0, 0, 0, 0.089);
+}
+
+.main-description {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(223, 223, 223);
+}
+
+.temp-humi {
+  font-weight: 900;
+  margin: 5px 15px;
+}
+
+.sub-description {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.min-max {
+  font-weight: 500;
+  margin: 5px 15px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 1px 1px 19px rgba(0, 0, 0, 0.089);
+}
+
+.dark-mode {
+  position: absolute;
+  top: 30px;
+  right: 60px;
+  padding: 0;
+  margin: 0;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.mode-text {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.dark-color {
+  background-color: #141414;
+}
+
+@media (width > 319px) and (width <= 575px) {
+  body,
+  html {
+    overflow: hidden;
+  }
+
+  .heading {
+    position: absolute;
+    font-size: 35px;
+    left: 10px;
+    top: 90%;
+  }
+
+  .input-holder {
+    gap: 25px;
+  }
+
+  input {
+    width: 170px;
+    padding: 3px;
+  }
+
+  button {
+    padding: 3px 10px;
+  }
+  .shape1,
+  .shape2 {
+    visibility: visible;
+  }
+
+  .shape1 {
+    width: 100px;
+    height: 100px;
+    top: 50px;
+    right: -30px;
+  }
+
+  .shape2 {
+    width: 50px;
+    height: 50px;
+    bottom: -20px;
+    left: -10px;
+  }
+
+  .dark-mode {
+    top: 30px;
+    right: 40px;
+  }
+
+  .mode-text {
+    top: 10px;
+    right: 10px;
+    letter-spacing: 0;
+  }
+}
