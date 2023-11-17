@@ -234,11 +234,16 @@ button:focus {
     overflow: hidden;
   }
 
+  .main
+  {
+    height: 100vh;
+  }
+
   .heading {
     position: absolute;
     font-size: 35px;
     left: 10px;
-    top: 90%;
+    top: 85%;
   }
 
   .input-holder {
