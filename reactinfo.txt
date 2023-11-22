@@ -1,0 +1,69 @@
+ - react?
+-->     React is a JavaScript library.
+        developed by facebook in 2011.
+        we can create spa using react and it is lightweight.
+        it uses the virtual dom to change the elements in the on any event.
+
+ - SPA and MPA?
+-->     SPA =>
+            SPA works inside the browser and does not needs reload during it's use.
+            No page reload no wait time required.
+            Single html file and multiple js files.
+
+        MPA =>
+            MPA is traditional methos of developing.
+            more reload time and more wait time.
+            this is beacuse there are multiple html file so if a user request server to render the content the the server returns a file and then it renders the whole html file.
+
+ - Create React Project?
+-->     npm create-react-app filename
+            This takes much time to start the development server.
+
+        npm start
+        
+        Other method to create a react Project is with Vite
+
+        npm create vit@latest
+        Project Name:
+        slecect framework
+
+        npm run dev
+
+        This vite appliction is faster than the simple react app and needs less time to start and loading any changes.
+
+ - Webpack?
+-->     Latest version is webpack 5
+        Webpack is a bundler. It is a JavaScript module bundeler.
+        It takes all the individual files and other assets like images and the css files and combiles them into one single bundle which can run in the browser.
+
+        Use:-
+            Build
+            Js and CSS Minify
+            Entry File
+
+        webpack file structure:-
+            in root folder create a webpack.config.js file 
+
+        now, if we use typescript the browser will not understand the files so we need the bab el to convert the ts file to js file and then the browser will understand the code and babel config file babelrc.json to configure babel.
+
+        npm install --save-dev @babel/core @babel/cli.
+
+        JavaScript file extension is filename.jsx
+        TypeScript file extension is filename.tsx
+
+        the webpack is a bundler and the bundle.js file should always be in the build folder
+
+        HTMLWebpackPlugin file:
+            what this does in it injects the bundle.js file in index,html file which is the only html file in the whole react app.
+
+
+
+build > holds all the file required for build i.e. bundle file
+src > source code
+
+packages required:-
+react: to write in react language
+react-dom: for routing purpose
+
+ - useState?
+-->     
