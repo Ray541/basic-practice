@@ -13,17 +13,21 @@ function App() {
   };
 
   const handleClick = (e) => {
-    if (result == isNaN) {
-      setResult("0");
-    }
     setResult(result.concat(e.target.name));
   };
 
   const finalAnswer = () => {
     try {
-      isNaN(result) ? setResult(eval(result)) : setResult(0);
-      if (setResult(result === Infinity)) {
-        setResult("Error");
+      if (result.includes("/0")) {
+        return setResult("Error");
+      }
+      if (result.includes("/")) {
+        return setResult(Number.isInteger(eval(result)) ? eval(result) : eval(result).toFixed(3));
+      }
+      if (isNaN(result)) {
+        setResult(eval(result));
+      } else {
+        setResult(0);
       }
     } catch (error) {
       setResult("Error");
