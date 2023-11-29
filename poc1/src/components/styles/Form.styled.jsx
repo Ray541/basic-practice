@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledForm = styled.form`
   position: relative;
-  width: auto;
+  max-width: 601px;
   height: auto;
   margin: 10px;
   display: flex;
@@ -11,7 +11,7 @@ export const StyledForm = styled.form`
   flex-direction: column;
   background-color: #ebfbffe6;
   border: 1px solid black;
-//   box-shadow: 0px 0px 5px 2px #ebfbffe6;
+  //   box-shadow: 0px 0px 5px 2px #ebfbffe6;
 
   @media (width > 768px) {
     padding: 30px 100px;
@@ -66,6 +66,25 @@ export const StyledForm = styled.form`
     }
   }
 
+  .last-input-holder
+  {
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .water-mark
+    {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 20px;
+      color: whitesmoke;
+      text-shadow: 0 0 7px black;
+      font-weight: 900;
+    }
+  }
+
   .input-holder {
     display: flex;
     flex-direction: column;
@@ -89,8 +108,8 @@ export const StyledForm = styled.form`
         background-color: #dbf9ff;
         border: 1px solid #0b95ea;
         box-shadow: 0px 0px 2px black;
+      }
     }
-}
 
     .error-message {
       color: red;
@@ -114,7 +133,7 @@ export const StyledForm = styled.form`
         background-color: #dbf9ff;
         border: 1px solid #0b95ea;
         box-shadow: 0px 0px 2px black;
-    }
+      }
     }
 
     input::file-selector-button {
@@ -131,10 +150,20 @@ export const StyledForm = styled.form`
         color: white;
       }
     }
+
+    .preview-holder {
+      margin-top: 20px;
+      overflow: hidden;
+      width: 90%;
+      
+      img {
+        width: 100%;
+      }
+    }
   }
 
   .button-holder {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     aign-items: center;
     justify-content: center;

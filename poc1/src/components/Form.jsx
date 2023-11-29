@@ -14,6 +14,7 @@ function Form() {
     photo: null,
   });
 
+  const [preview, setPreview] = useState(null);
   const fileRef = useRef(null);
 
   const [error, setError] = useState({
@@ -21,14 +22,6 @@ function Form() {
     phone: false,
     photo: false,
   });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handelFileChange = (e) => {
-    setFormData({ ...formData, photo: e.target.files[0] });
-  };
 
   const validName = (name) => {
     const nameRegx = /^[a-zA-Z]$/;
@@ -38,6 +31,44 @@ function Form() {
   const validPhoneNumber = (phone) => {
     const phoneRegx = /^\d{10}$/;
     return phoneRegx.test(phone);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handelFileChange = (e) => {
+    const uploadedImage = e.target.files[0];
+
+    if (uploadedImage) {
+      const img = new Image();
+      img.src = URL.createObjectURL(uploadedImage);
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas dimensions that matches the image
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Add watermark
+        ctx.font = "bold 13px Arial";
+        ctx.fillStyle = "#141414";
+        ctx.fillText("Antstack", canvas.width - 80, canvas.height - 20);
+
+        // Convert the canvas to the Blob
+        canvas.toBlob((blob) => {
+          const watermarkedImageURL = URL.createObjectURL(blob);
+
+          setFormData({ ...formData, photo: watermarkedImageURL });
+          setPreview(watermarkedImageURL);
+        });
+      };
+    }
   };
 
   const handleSubmit = (event) => {
@@ -62,35 +93,34 @@ function Form() {
       State: formData.state,
       City: formData.city,
       Address: formData.address,
-      Photo: formData.photo.name,
+      Photo: preview,
     };
 
     if (!newError.name && !newError.phone && !newError.photo) {
+      // API to store Data in Google sheets
+      axios
+        .post(
+          "https://sheet.best/api/sheets/c3250328-3248-4d69-a2fd-93ffd8c7ad89",
+          data
+        )
+        .then((raw) => {
+          console.log(raw);
+        });
+      // API to send the data to the entered phone number
       const receiverPhone = data.Phone;
       const message = encodeURIComponent(`
-      Name: ${data.Name}
-      Phone: ${data.Phone}
-      Email: ${data.Email}
-      State: ${data.State}
-      City: ${data.City}
-      Address: ${data.Address}
-      Photo: ${data.Photo}
-      `);
-
+        Name: ${data.Name}
+        Phone: ${data.Phone}
+        Email: ${data.Email}
+        State: ${data.State}
+        City: ${data.City}
+        Address: ${data.Address}
+        Photo: [Click here to view the photo](${data.Photo})
+        `);
       const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${message}`;
-
-      alert("Form Submited Data Sent");
+      alert("Send through What's App Message");
       window.open(whatsappURL);
     }
-
-    axios
-      .post(
-        "https://sheet.best/api/sheets/c3250328-3248-4d69-a2fd-93ffd8c7ad89",
-        data
-      )
-      .then((raw) => {
-        console.log(raw);
-      });
 
     setFormData({
       name: "",
@@ -105,6 +135,8 @@ function Form() {
     if (fileRef.current) {
       fileRef.current.value = "";
     }
+
+    setPreview("");
   };
 
   return (
@@ -113,7 +145,6 @@ function Form() {
         What&apos;s App Message Submission
       </h1>
       <StyledForm action="" onSubmit={handleSubmit}>
-        {/* <span className="required-span">* fields are mandatory</span> */}
         <h1 className="mt-2 mb-3">Tell us about yourself</h1>
         <div className="two col-lg-12 col-11">
           <div className="input-holder col-lg-6">
@@ -121,7 +152,7 @@ function Form() {
               Name<sup>*</sup>
               {error.name && (
                 <span className="name-error error-message">
-                  {formData.name === "" ? "Required" : "Letter Only"}
+                  {formData.name === "" ? "Required" : ""}
                 </span>
               )}
             </label>
@@ -213,19 +244,23 @@ function Form() {
           </div>
         </div>
         <div className="two col-lg-12 col-md-12 col-11">
-          <div className="input-holder col-lg-12 col-md-11">
+          <div className="last-input-holder input-holder col-lg-12 col-md-11">
             <label id="file-label" htmlFor="upload-file">
               Upload Photo<sup>*</sup>
               {error.photo && <span className="error-message">Required</span>}
             </label>
             <input
               type="file"
+              accept="image/*"
               name="photo"
               id="upload-file"
               autoComplete="off"
               onChange={handelFileChange}
               ref={fileRef}
             />
+            <div className="preview-holder">
+              {preview && <img src={preview} alt="Preview" />}
+            </div>
           </div>
         </div>
         <div className="button-holder col-lg-12 col-md-11 col-sm-10 col-10">
