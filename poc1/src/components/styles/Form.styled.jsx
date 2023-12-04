@@ -91,6 +91,7 @@ export const StyledForm = styled.form`
     margin: 10px 0;
 
     label {
+      width: 100%;
       font-size: 20px;
       font-weight: 400;
       letter-spacing: 1px;

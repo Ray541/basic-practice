@@ -1,4 +1,7 @@
 import { useState, useRef } from "react";
+import { storeText, storeImage } from "../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from "axios";
 import { StyledForm } from "./styles/Form.styled";
 import "bootstrap/dist/css/bootstrap.css";
@@ -17,6 +20,7 @@ function Form() {
   const [preview, setPreview] = useState(null);
   const fileRef = useRef(null);
 
+  // Validation Start
   const [error, setError] = useState({
     name: false,
     phone: false,
@@ -32,6 +36,7 @@ function Form() {
     const phoneRegx = /^\d{10}$/;
     return phoneRegx.test(phone);
   };
+  // Validation End
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,7 +53,7 @@ function Form() {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
 
-        // Set canvas dimensions that matches the image
+        // Set canvas dimensions which matches the image
         canvas.width = img.width;
         canvas.height = img.height;
 
@@ -56,24 +61,30 @@ function Form() {
         ctx.drawImage(img, 0, 0);
 
         // Add watermark
-        ctx.font = "bold 13px Arial";
-        ctx.fillStyle = "#141414";
-        ctx.fillText("Antstack", canvas.width - 80, canvas.height - 20);
+        ctx.font = "bold 20px Arial";
+        ctx.fillStyle = "red";
+        ctx.fillText("Antstack", canvas.width - 120, canvas.height - 20);
 
-        // Convert the canvas to the Blob
+        // Convert the canvas to a blob
         canvas.toBlob((blob) => {
-          const watermarkedImageURL = URL.createObjectURL(blob);
+          const watermarkedImage = new FormData();
+          watermarkedImage.append("photo", blob, "watermarked_image.jpg");
 
-          setFormData({ ...formData, photo: watermarkedImageURL });
-          setPreview(watermarkedImageURL);
-        });
+          setFormData({ ...formData, photo: watermarkedImage.get("photo") });
+          setPreview(URL.createObjectURL(blob));
+        }, "image/*");
       };
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const dbref = collection(storeText, "userInfo");
+  const storageRef = ref(
+    storeImage,
+    `images/${formData.name}_${Date.now()}.jpg`
+  );
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const newError = {
       name:
         formData.name === "" ||
@@ -86,40 +97,66 @@ function Form() {
 
     setError(newError);
 
-    const data = {
-      Name: formData.name,
-      Phone: formData.phone,
-      Email: formData.email,
-      State: formData.state,
-      City: formData.city,
-      Address: formData.address,
-      Photo: preview,
-    };
+    // const data = {
+    //   Name: formData.name,
+    //   Phone: formData.phone,
+    //   Email: formData.email,
+    //   State: formData.state,
+    //   City: formData.city,
+    //   Address: formData.address,
+    //   Photo: formData.photo,
+    // };
 
     if (!newError.name && !newError.phone && !newError.photo) {
-      // API to store Data in Google sheets
-      axios
-        .post(
-          "https://sheet.best/api/sheets/c3250328-3248-4d69-a2fd-93ffd8c7ad89",
-          data
-        )
-        .then((raw) => {
-          console.log(raw);
-        });
-      // API to send the data to the entered phone number
-      const receiverPhone = data.Phone;
-      const message = encodeURIComponent(`
-        Name: ${data.Name}
-        Phone: ${data.Phone}
-        Email: ${data.Email}
-        State: ${data.State}
-        City: ${data.City}
-        Address: ${data.Address}
-        Photo: [Click here to view the photo](${data.Photo})
-        `);
-      const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${message}`;
-      alert("Send through What's App Message");
-      window.open(whatsappURL);
+      /**Store the dataUrl to [firebase storage] */
+      const snapshot = await uploadBytes(storageRef, formData.photo);
+      console.log("Image uploaded successfully!", snapshot);
+
+      /**Getdownload url to upload the image */
+      const downloadURL = await getDownloadURL(storageRef);
+      /**Send user details to Firebase Database */
+      try {
+        await addDoc(dbref, {
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone,
+          State: formData.state,
+          City: formData.city,
+          Address: formData.address,
+          Photo: downloadURL,
+        }); // Add the data to the firebase database
+
+        const data = {
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone,
+          State: formData.state,
+          City: formData.city,
+          Address: formData.address,
+          Photo: downloadURL,
+        };
+        await axios.post("http://localhost:3001/send-whatsapp", data);
+        alert("Message sent successfully!");
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+
+      // API to send the data to the entered What's App Number
+      // const receiverPhone = data.Phone;
+      // const message = `
+      // Name: ${data.Name}
+      // Phone: ${data.Phone}
+      // Email: ${data.Email}
+      // State: ${data.State}
+      // City: ${data.City}
+      // Address: ${data.Address}
+      // Photo: ${downloadURL}`;
+      //             const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
+      //               message
+      //             )}`;
+      //             alert("Send through What's App Message");
+      //             window.open(whatsappURL);
     }
 
     setFormData({
@@ -175,7 +212,7 @@ function Form() {
               )}
             </label>
             <input
-              type="number"
+              type="text"
               name="phone"
               value={formData.phone}
               id="phone"
