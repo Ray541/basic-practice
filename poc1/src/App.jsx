@@ -1,12 +1,12 @@
-import { Container } from "./components/styles/container.styled";
-import Form from "./components/Form";
+// import React from "react";
+import Form from "./components/Form/Form";
+import Admin from "./components/AdminPanel/Admin";
 
 function App() {
   return (
     <>
-      <Container>
-        <Form />
-      </Container>
+      <Form />
+      <Admin />
     </>
   );
 }

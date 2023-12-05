@@ -1,7 +1,17 @@
 import styled from "styled-components";
 
+export const FormSection = styled.section`
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #80b8db;
+    padding: 30px 0;
+`;
+
 export const StyledForm = styled.form`
-  position: relative;
   max-width: 601px;
   height: auto;
   margin: 10px;
@@ -36,7 +46,7 @@ export const StyledForm = styled.form`
 
   h1 {
     font-weight: 600;
-    font-size: 40px;
+    font-size: 39px;
     letter-spacing: 0.7px;
     margin: 0;
     text-align: center;
@@ -66,15 +76,13 @@ export const StyledForm = styled.form`
     }
   }
 
-  .last-input-holder
-  {
-    display : flex;
+  .last-input-holder {
+    display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
 
-    .water-mark
-    {
+    .water-mark {
       position: absolute;
       bottom: 10px;
       right: 20px;
@@ -156,7 +164,7 @@ export const StyledForm = styled.form`
       margin-top: 20px;
       overflow: hidden;
       width: 90%;
-      
+
       img {
         width: 100%;
       }
