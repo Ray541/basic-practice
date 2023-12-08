@@ -1,14 +1,36 @@
 import styled from "styled-components";
 
 export const FormSection = styled.section`
-    width: auto;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #80b8db;
-    padding: 30px 0;
+  width: auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ffe1a8a6; //#ffe1a8
+  padding: 30px 0;
+
+  .logo-left,
+  .logo-right {
+    width: 75px;
+    margin-right: 15px;
+  }
+
+  .logo-left {
+    @media (width >= 320px) and (width <= 425px) {
+      width: 50px;
+      margin: 0;
+    }
+  }
+
+  .logo-right {
+    transform: scaleX(-1);
+    margin-left: 15px;
+
+    @media (width >= 320px) and (width <= 768px) {
+      display: none;
+    }
+  }
 `;
 
 export const StyledForm = styled.form`
@@ -20,8 +42,9 @@ export const StyledForm = styled.form`
   justify-content: center;
   flex-direction: column;
   background-color: #ebfbffe6;
-  border: 1px solid black;
-  //   box-shadow: 0px 0px 5px 2px #ebfbffe6;
+  // border: 1px solid silver;
+  border-radius: 10px;
+  box-shadow: 0 3px 5px silver;
 
   @media (width > 768px) {
     padding: 30px 100px;
@@ -100,9 +123,13 @@ export const StyledForm = styled.form`
 
     label {
       width: 100%;
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 400;
       letter-spacing: 1px;
+
+      @media (width >= 320px) and (width <= 425px) {
+        font-size: 15px;
+      }
     }
 
     input {
@@ -179,20 +206,20 @@ export const StyledForm = styled.form`
   }
 
   #submit {
-    width: 200px;
+    width: 160px;
     padding: 3px 50px;
     font-size: 1rem;
-    background-color: transparent;
+    background-color: #0b95ea;
     outline: unset;
-    border: 1px solid #0b95ea;
+    border: unset;
+    border-radius: 5px;
     letter-spacing: 1px;
     transition: all 0.3s ease;
+    color: #f1fff1;
 
     &:hover,
     &:focus {
-      background-color: #0b95ea;
-      border: 1px solid transparent;
-      color: white;
+      transform: translateY(-3px);
     }
   }
 `;

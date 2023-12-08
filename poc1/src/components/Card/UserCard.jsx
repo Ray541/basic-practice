@@ -1,16 +1,22 @@
 // import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import UserModel from "../UserPopUp/UserModol";
+import { useState } from "react";
 
 const UserCardWrapper = styled.div`
+  position: relative;
   border: 1px solid transparent;
+  height: auto;
   background-color: #ffffffed;
   padding: 10px;
-  margin: 25px;
-  border-radius: 2px;
+  margin: 20px;
+  border-radius: 7px;
   transition: all 0.3s ease;
 
-  @media (width >= 320px) and (width < 425px) {
+  @media (width >= 320px) and (width <= 425px) {
     margin: 20px;
   }
 
@@ -21,14 +27,13 @@ const UserCardWrapper = styled.div`
     box-shadow: 0px 3px 10px #0000009a;
 
     .user-image {
-      transform: scale(1.09);
+      transform: scale(1.03);
       filter: grayscale(0);
     }
 
-    .card-title::after
-    {
+    .card-title::after {
       transform: scale(1);
-      transition-delay: 300ms;
+      transition-delay: 570ms;
     }
   }
 
@@ -40,13 +45,12 @@ const UserCardWrapper = styled.div`
 const UserName = styled.h3`
   position: relative;
   color: #333;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 10px;
 
-  &.card-title::after
-  {
-    position:absolute;
+  &.card-title::after {
+    position: absolute;
     content: "";
     left: 0;
     bottom: 0;
@@ -55,7 +59,7 @@ const UserName = styled.h3`
     background-color: #f34655;
     transform: scale(0);
     transform-origin: left;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease-in;
   }
 `;
 
@@ -67,8 +71,7 @@ const UserPhone = styled.p`
 
 const UserImage = styled.div`
   width: 100%;
-  height: 100%;
-  padding: 10px;
+  height: 400px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -77,10 +80,10 @@ const UserImage = styled.div`
 
   .user-image {
     transition: all 0.5s ease;
-    transition-delay: 165ms;
+    transition-delay: 180ms;
     width: 100%;
-    height: 50%;
-    filter: grayscale(0.5);
+    height: 100%;
+    filter: grayscale(0.7);
   }
 `;
 
@@ -92,31 +95,57 @@ const ViewMore = styled.button`
   border-radius: 3px;
   background-color: #4689f3;
   color: #f1f1f1;
-  // color: #141414;
   transition: all 0.3s ease;
   letter-spacing: 0.7px;
-  
-  &:hover {
-    background-color: #f34655;
+
+  &:hover,
+  &:focus {
+    background-color: #6fae63;
     transform: translateX(3px);
   }
 `;
 
-function UserCard() {
+function UserCard({ user }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (user.length === 0) {
+    return <div>No Users Found</div>;
+  }
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <UserCardWrapper className="col-lg-3 col-md-4 col-sm-8 col-11">
-      <UserName className="card-title">John Doe</UserName>
-      <UserImage>
-        <img
-          className="user-image"
-          src="./src/assets/react.svg"
-          alt="User Photo"
-        />
-      </UserImage>
-      <UserPhone>+1234567890</UserPhone>
-      <ViewMore>View All Details</ViewMore>
-    </UserCardWrapper>
+    <>
+      <UserCardWrapper className="col-lg-3 col-md-5 col-sm-7 col-12">
+        <UserName className="card-title">{user.Name}</UserName>
+        <UserImage>
+          <img className="user-image" src={user.Photo} alt="User Photo" />
+        </UserImage>
+        <UserPhone>{user.Phone}</UserPhone>
+        <ViewMore onClick={openModal}>
+          <i className="bi bi-door-closed-fill me-1"></i>All Details
+        </ViewMore>
+      </UserCardWrapper>
+      <UserModel isOpen={isModalOpen} onClose={closeModal} />
+    </>
   );
 }
+
+UserCard.propTypes = {
+  user: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      Name: PropTypes.string,
+      Phone: PropTypes.string,
+      Photo: PropTypes.string,
+    })
+  ]).isRequired,
+};
 
 export default UserCard;

@@ -9,10 +9,25 @@ import "bootstrap/dist/css/bootstrap.css";
 function Form() {
   const [formData, setFormData] = useState({
     name: "",
+    fathersname: "",
+    mothersname: "",
+    gotra: "",
+    nakshatra: "",
+    rashi: "",
+    gana: "",
+    nadi: "",
+    madhwasmartha: "",
+    matha: "",
+    datetimebirth: "",
+    placebirth: "",
+    height: "",
+    qualification: "",
+    workingorg: "",
+    placework: "",
+    salary: "",
+    siblings: "",
     phone: "",
-    email: "",
-    state: "",
-    city: "",
+    expectations: "",
     address: "",
     photo: null,
   });
@@ -39,6 +54,7 @@ function Form() {
   // Validation End
 
   const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -97,15 +113,29 @@ function Form() {
 
     setError(newError);
 
-    const data = {
-      Name: formData.name,
-      Phone: formData.phone,
-      Email: formData.email,
-      State: formData.state,
-      City: formData.city,
-      Address: formData.address,
-      Photo: formData.photo,
-    };
+    // const data = {
+    //   Name: formData.name,
+    //   FathersName: formData.fathersName,
+    //   MothersName: formData.mothersName,
+    //   Gotra: formData.gotra,
+    //   Nakshatra: formData.nakshatra,
+    //   Gana: formData.gana,
+    //   Nadi: formData.nadi,
+    //   MadhwaSmartha: formData.madhwaSmartha,
+    //   Matha: formData.matha,
+    //   DateTimeBirth: formData.dateTimeBirth,
+    //   PlaceBirth: formData.placeBirth,
+    //   Height: formData.height,
+    //   Qualification: formData.qualification,
+    //   WorkingOrg: formData.workingOrg,
+    //   PlaceWork: formData.placeWork,
+    //   Salary: formData.salary,
+    //   Siblings: formData.siblings,
+    //   Phone: formData.phone,
+    //   Expectations: formData.expectations,
+    //   Address: formData.address,
+    //   Photo: formData.photo,
+    // };
 
     if (!newError.name && !newError.phone && !newError.photo) {
       /**Store the dataUrl to [firebase storage] */
@@ -118,10 +148,24 @@ function Form() {
       try {
         await addDoc(dbref, {
           Name: formData.name,
-          Email: formData.email,
+          FathersName: formData.fathersname,
+          MothersName: formData.mothersname,
+          Gotra: formData.gotra,
+          Nakshatra: formData.nakshatra,
+          Gana: formData.gana,
+          Nadi: formData.nadi,
+          MadhwaSmartha: formData.madhwasmartha,
+          Matha: formData.matha,
+          DateTimeBirth: formData.datetimebirth,
+          PlaceBirth: formData.placebirth,
+          Height: formData.height,
+          Qualification: formData.qualification,
+          WorkingOrg: formData.workingorg,
+          PlaceWork: formData.placework,
+          Salary: formData.salary,
+          Siblings: formData.siblings,
           Phone: formData.phone,
-          State: formData.state,
-          City: formData.city,
+          Expectations: formData.expectations,
           Address: formData.address,
           Photo: downloadURL,
         }); // Add the data to the firebase database
@@ -144,28 +188,43 @@ function Form() {
       }
 
       // API to send the data to the intended What's App Number
-      const receiverPhone = data.Phone;
-      const message = `
-Name: ${data.Name}
-Phone: ${data.Phone}
-Email: ${data.Email}
-State: ${data.State}
-City: ${data.City}
-Address: ${data.Address}
-Photo: ${downloadURL}`;
-      const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
-        message
-      )}`;
-      alert("Send through What's App Message");
-      window.open(whatsappURL);
+      //       const receiverPhone = data.Phone;
+      //       const message = `
+      // Name: ${data.Name}
+      // Phone: ${data.Phone}
+      // Email: ${data.Email}
+      // State: ${data.State}
+      // City: ${data.City}
+      // Address: ${data.Address}
+      // Photo: ${downloadURL}`;
+      //       const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
+      //         message
+      //       )}`;
+      //       alert("Send through What's App Message");
+      //       window.open(whatsappURL);
     }
 
     setFormData({
       name: "",
+      fathersname: "",
+      mothersname: "",
+      gotra: "",
+      nakshatra: "",
+      rashi: "",
+      gana: "",
+      nadi: "",
+      madhwasmartha: "",
+      matha: "",
+      datetimebirth: "",
+      placebirth: "",
+      height: "",
+      qualification: "",
+      workingorg: "",
+      placework: "",
+      salary: "",
+      siblings: "",
       phone: "",
-      email: "",
-      state: "",
-      city: "",
+      expectations: "",
       address: "",
       photo: null,
     });
@@ -181,7 +240,17 @@ Photo: ${downloadURL}`;
     <>
       <FormSection>
         <h1 className="mb-4" style={{ textAlign: "center" }}>
-          What&apos;s App Message Submission
+          <img
+            className="logo-left"
+            src="./src/assets/hand-in-hand.png"
+            alt=""
+          />
+          Sumadhwa Matrimony
+          <img
+            className="logo-right"
+            src="./src/assets/hand-in-hand.png"
+            alt=""
+          />
         </h1>
         <StyledForm action="" onSubmit={handleSubmit}>
           <h1 className="mt-2 mb-3">Tell us about yourself</h1>
@@ -205,8 +274,247 @@ Photo: ${downloadURL}`;
               />
             </div>
             <div className="input-holder col-lg-6">
+              <label id="fathers-label" htmlFor="fathersname">
+                Father&apos;s Name
+              </label>
+              <input
+                type="text"
+                name="fathersname"
+                value={formData.fathersname}
+                id="fathersname"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="mothers-label" htmlFor="mothersname">
+                Mother&apos;s Name
+              </label>
+              <input
+                type="text"
+                name="mothersname"
+                value={formData.mothersname}
+                id="mothersname"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="gotra-label" htmlFor="gotra">
+                Gotra
+              </label>
+              <input
+                type="text"
+                name="gotra"
+                value={formData.gotra}
+                id="gotra"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="nakshatra-label" htmlFor="nakshatra">
+                Nakshatra
+              </label>
+              <input
+                type="text"
+                name="nakshatra"
+                value={formData.nakshatra}
+                id="nakshatra"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="rashi-label" htmlFor="rashi">
+                Rashi
+              </label>
+              <input
+                type="text"
+                name="rashi"
+                value={formData.rashi}
+                id="rashi"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="gana-label" htmlFor="gana">
+                Gana
+              </label>
+              <input
+                type="text"
+                name="gana"
+                value={formData.gana}
+                id="gana"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="nadi-label" htmlFor="nadi">
+                Nadi.
+              </label>
+              <input
+                type="text"
+                name="nadi"
+                value={formData.nadi}
+                id="nadi"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="madhwa-smartha-label" htmlFor="madhwasmartha">
+                Madhwa/ Smartha
+              </label>
+              <input
+                type="text"
+                name="madhwasmartha"
+                value={formData.madhwasmartha}
+                id="madhwasmartha"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="matha-label" htmlFor="matha">
+                Matha.
+              </label>
+              <input
+                type="text"
+                name="matha"
+                value={formData.matha}
+                id="matha"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="datetime-birth-label" htmlFor="datetimebirth">
+                Date & Time of Birth
+              </label>
+              <input
+                type="text"
+                name="datetimebirth"
+                value={formData.datetimebirth}
+                id="datetimebirth"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="placebirth-label" htmlFor="placebirth">
+                Place of Birth
+              </label>
+              <input
+                type="text"
+                name="placebirth"
+                value={formData.placebirth}
+                id="placebirth"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="height-label" htmlFor="height">
+                Height
+              </label>
+              <input
+                type="text"
+                name="height"
+                value={formData.height}
+                id="height"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="qualification-label" htmlFor="qualification">
+                Qualification
+              </label>
+              <input
+                type="text"
+                name="qualification"
+                value={formData.qualification}
+                id="qualification"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="workingorg-label" htmlFor="workingorg">
+                Working Organisation
+              </label>
+              <input
+                type="text"
+                name="workingorg"
+                value={formData.workingorg}
+                id="workingorg"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="placeofwork-label" htmlFor="placework">
+                Place of Working
+              </label>
+              <input
+                type="text"
+                name="placework"
+                value={formData.placework}
+                id="placework"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-11">
+            <div className="input-holder col-lg-6">
+              <label id="salary-label" htmlFor="salary">
+                Salary Per Annum
+              </label>
+              <input
+                type="text"
+                name="salary"
+                value={formData.salary}
+                id="salary"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-holder col-lg-6">
+              <label id="siblings-label" htmlFor="siblings">
+                Siblings
+              </label>
+              <input
+                type="text"
+                name="siblings"
+                value={formData.siblings}
+                id="siblings"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="two col-lg-12 col-md-12 col-11">
+            <div className="input-holder col-lg-12 col-md-11">
               <label id="phone-label" htmlFor="phone">
-                Phone<sup>*</sup>
+                Contact Nos.<sup>*</sup>
                 {error.phone && (
                   <span className="error-message">
                     {formData.phone === "" ? "Required" : ""}
@@ -223,47 +531,20 @@ Photo: ${downloadURL}`;
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
-            <div className="input-holder col-lg-6">
-              <label id="email-label" htmlFor="email">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                id="email"
-                autoComplete="off"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-holder col-lg-6">
-              <label id="state-label" htmlFor="state">
-                State
-              </label>
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                id="state"
-                autoComplete="off"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
           <div className="two col-lg-12 col-md-12 col-11">
             <div className="input-holder col-lg-12 col-md-11">
-              <label id="city-label" htmlFor="city">
-                City
+              <label id="expectations-label" htmlFor="expectations">
+                Expectations about Groom/Bride
               </label>
-              <input
+              <textarea
                 type="text"
-                name="city"
-                value={formData.city}
-                id="city"
+                name="expectations"
+                value={formData.expectations}
+                id="expectations"
+                className="address-input"
                 autoComplete="off"
                 onChange={handleChange}
-              />
+              ></textarea>
             </div>
           </div>
           <div className="two col-lg-12 col-md-12 col-11">
@@ -285,7 +566,7 @@ Photo: ${downloadURL}`;
           <div className="two col-lg-12 col-md-12 col-11">
             <div className="last-input-holder input-holder col-lg-12 col-md-11">
               <label id="file-label" htmlFor="upload-file">
-                Upload Photo<sup>*</sup>
+                Upload Photo in 4:5 Ratio<sup>*</sup>
                 {error.photo && <span className="error-message">Required</span>}
               </label>
               <input
