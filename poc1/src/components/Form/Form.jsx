@@ -54,10 +54,11 @@ function Form() {
   // Validation End
 
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  /**Photo upload function with adding watermark to it */
   const handelFileChange = (e) => {
     const uploadedImage = e.target.files[0];
 
@@ -68,6 +69,16 @@ function Form() {
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
+
+        // Calculate the new dimensions while maintaining aspect ratio
+        let newWidth, newHeight;
+        if (img.width > img.height) {
+          newWidth = Math.min(img.width, 480);
+          newHeight = (newWidth / img.width) * img.height;
+        } else {
+          newHeight = Math.min(img.height, 600);
+          newWidth = (newHeight / img.height) * img.width;
+        }
 
         // Set canvas dimensions which matches the image
         canvas.width = img.width;
@@ -93,7 +104,10 @@ function Form() {
     }
   };
 
+  /**stores the data in Firebase Firestore userInfo Collection */
   const dbref = collection(storeText, "userInfo");
+
+  /**stores the image in the Firebase Storage in images folder */
   const storageRef = ref(
     storeImage,
     `images/${formData.name}_${Date.now()}.jpg`
@@ -113,29 +127,31 @@ function Form() {
 
     setError(newError);
 
-    // const data = {
-    //   Name: formData.name,
-    //   FathersName: formData.fathersName,
-    //   MothersName: formData.mothersName,
-    //   Gotra: formData.gotra,
-    //   Nakshatra: formData.nakshatra,
-    //   Gana: formData.gana,
-    //   Nadi: formData.nadi,
-    //   MadhwaSmartha: formData.madhwaSmartha,
-    //   Matha: formData.matha,
-    //   DateTimeBirth: formData.dateTimeBirth,
-    //   PlaceBirth: formData.placeBirth,
-    //   Height: formData.height,
-    //   Qualification: formData.qualification,
-    //   WorkingOrg: formData.workingOrg,
-    //   PlaceWork: formData.placeWork,
-    //   Salary: formData.salary,
-    //   Siblings: formData.siblings,
-    //   Phone: formData.phone,
-    //   Expectations: formData.expectations,
-    //   Address: formData.address,
-    //   Photo: formData.photo,
-    // };
+    /**Set the formData in the data variable */
+    const data = {
+      Name: formData.name,
+      FathersName: formData.fathersname,
+      MothersName: formData.mothersname,
+      Gotra: formData.gotra,
+      Nakshatra: formData.nakshatra,
+      Rashi: formData.rashi,
+      Gana: formData.gana,
+      Nadi: formData.nadi,
+      MadhwaSmartha: formData.madhwasmartha,
+      Matha: formData.matha,
+      DateTimeBirth: formData.datetimebirth,
+      PlaceBirth: formData.placebirth,
+      Height: formData.height,
+      Qualification: formData.qualification,
+      WorkingOrg: formData.workingorg,
+      PlaceWork: formData.placework,
+      Salary: formData.salary,
+      Siblings: formData.siblings,
+      Phone: formData.phone,
+      Expectations: formData.expectations,
+      Address: formData.address,
+      Photo: formData.photo,
+    };
 
     if (!newError.name && !newError.phone && !newError.photo) {
       /**Store the dataUrl to [firebase storage] */
@@ -146,12 +162,14 @@ function Form() {
       const downloadURL = await getDownloadURL(storageRef);
       /**Send user details to Firebase Database */
       try {
+        /**Creates a new document for every other user */
         await addDoc(dbref, {
           Name: formData.name,
           FathersName: formData.fathersname,
           MothersName: formData.mothersname,
           Gotra: formData.gotra,
           Nakshatra: formData.nakshatra,
+          Rashi: formData.rashi,
           Gana: formData.gana,
           Nadi: formData.nadi,
           MadhwaSmartha: formData.madhwasmartha,
@@ -168,42 +186,47 @@ function Form() {
           Expectations: formData.expectations,
           Address: formData.address,
           Photo: downloadURL,
-        }); // Add the data to the firebase database
-
-        // const data = {
-        //   Name: formData.name,
-        //   Email: formData.email,
-        //   Phone: formData.phone,
-        //   State: formData.state,
-        //   City: formData.city,
-        //   Address: formData.address,
-        //   Photo: downloadURL,
-        // };
-
-        // await axios.post("http://localhost:3001/send-whatsapp", data);
-        // alert("Message sent successfully!");
+        });
       } catch (error) {
         alert(error);
         console.log(error);
       }
 
       // API to send the data to the intended What's App Number
-      //       const receiverPhone = data.Phone;
-      //       const message = `
-      // Name: ${data.Name}
-      // Phone: ${data.Phone}
-      // Email: ${data.Email}
-      // State: ${data.State}
-      // City: ${data.City}
-      // Address: ${data.Address}
-      // Photo: ${downloadURL}`;
-      //       const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
-      //         message
-      //       )}`;
-      //       alert("Send through What's App Message");
-      //       window.open(whatsappURL);
+      const receiverPhone = data.Phone;
+
+      /**Uses the data variable to send the data through message variable to the What's App No. */
+      const message = `
+Name: ${data.Name}
+Father's Name: ${data.FathersName},
+Mother's Name: ${data.MothersName},
+Gotra: ${data.Gotra},
+Nakshatra: ${data.Nakshatra},
+Rashi: ${data.Rashi},
+Gana: ${data.Gana},
+Nadi: ${data.Nadi},
+Madhwa / Smartha: ${data.MadhwaSmartha},
+Matha: ${data.Matha},
+Date and Time of Birth: ${data.DateTimeBirth},
+Place of Birth: ${data.PlaceBirth},
+Height: ${data.Height},
+Qualification: ${data.Qualification},
+Working Organization: ${data.WorkingOrg},
+Place of Work: ${data.PlaceWork},
+Salary: ${data.Salary},
+Siblings: ${data.Siblings},
+Phone: ${data.Phone},
+Expectations: ${data.Expectations},
+Address: ${data.Address},
+Photo: ${downloadURL}`;
+      const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
+        message
+      )}`;
+      alert("Send through What's App Message");
+      window.open(whatsappURL);
     }
 
+    /**Clears the form and sets the state as empty string */
     setFormData({
       name: "",
       fathersname: "",
@@ -245,7 +268,7 @@ function Form() {
             src="./src/assets/hand-in-hand.png"
             alt=""
           />
-          Sumadhwa Matrimony
+          Matrimony
           <img
             className="logo-right"
             src="./src/assets/hand-in-hand.png"
@@ -254,7 +277,7 @@ function Form() {
         </h1>
         <StyledForm action="" onSubmit={handleSubmit}>
           <h1 className="mt-2 mb-3">Tell us about yourself</h1>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="name-label" htmlFor="name">
                 Name<sup>*</sup>
@@ -287,7 +310,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="mothers-label" htmlFor="mothersname">
                 Mother&apos;s Name
@@ -315,7 +338,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="nakshatra-label" htmlFor="nakshatra">
                 Nakshatra
@@ -343,7 +366,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="gana-label" htmlFor="gana">
                 Gana
@@ -371,7 +394,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="madhwa-smartha-label" htmlFor="madhwasmartha">
                 Madhwa/ Smartha
@@ -399,7 +422,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="datetime-birth-label" htmlFor="datetimebirth">
                 Date & Time of Birth
@@ -427,7 +450,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="height-label" htmlFor="height">
                 Height
@@ -455,7 +478,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="workingorg-label" htmlFor="workingorg">
                 Working Organisation
@@ -483,7 +506,7 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-11">
+          <div className="two col-lg-12 clo-md-11 col-11">
             <div className="input-holder col-lg-6">
               <label id="salary-label" htmlFor="salary">
                 Salary Per Annum
@@ -511,10 +534,10 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-md-12 col-11">
-            <div className="input-holder col-lg-12 col-md-11">
+          <div className="two col-lg-12 col-md-10 col-11">
+            <div className="input-holder col-lg-12 col-12">
               <label id="phone-label" htmlFor="phone">
-                Contact Nos.<sup>*</sup>
+                What&apos;s App Number<sup>*</sup>
                 {error.phone && (
                   <span className="error-message">
                     {formData.phone === "" ? "Required" : ""}
@@ -531,8 +554,8 @@ function Form() {
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-md-12 col-11">
-            <div className="input-holder col-lg-12 col-md-11">
+          <div className="two col-lg-12 col-md-10 col-11">
+            <div className="input-holder col-lg-12 col-12">
               <label id="expectations-label" htmlFor="expectations">
                 Expectations about Groom/Bride
               </label>
@@ -541,14 +564,14 @@ function Form() {
                 name="expectations"
                 value={formData.expectations}
                 id="expectations"
-                className="address-input"
+                className="address-input expectations"
                 autoComplete="off"
                 onChange={handleChange}
               ></textarea>
             </div>
           </div>
-          <div className="two col-lg-12 col-md-12 col-11">
-            <div className="input-holder col-lg-12 col-md-11">
+          <div className="two col-lg-12 col-md-10 col-11">
+            <div className="input-holder col-lg-12 col-12">
               <label id="address-label" htmlFor="address">
                 Address
               </label>
@@ -563,8 +586,8 @@ function Form() {
               ></textarea>
             </div>
           </div>
-          <div className="two col-lg-12 col-md-12 col-11">
-            <div className="last-input-holder input-holder col-lg-12 col-md-11">
+          <div className="two col-lg-12 col-md-10 col-11">
+            <div className="last-input-holder input-holder col-lg-12 col-12">
               <label id="file-label" htmlFor="upload-file">
                 Upload Photo in 4:5 Ratio<sup>*</sup>
                 {error.photo && <span className="error-message">Required</span>}

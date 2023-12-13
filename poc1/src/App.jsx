@@ -1,14 +1,14 @@
 // import React from "react";
 import Form from "./components/Form/Form";
 import Admin from "./components/AdminPanel/Admin";
-import UserModel from "./components/UserPopUp/UserModol";
+import UserModal from "./components/UserPopUp/UserModal";
 
 function App() {
   return (
     <>
       <Form />
       <Admin />
-      <UserModel />
+      <UserModal />
     </>
   );
 }

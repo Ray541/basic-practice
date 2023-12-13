@@ -7,13 +7,19 @@ export const FormSection = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #ffe1a8a6; //#ffe1a8
+  background-color: #fff; //#ffe1a8
   padding: 30px 0;
 
   .logo-left,
   .logo-right {
     width: 75px;
     margin-right: 15px;
+  }
+
+  h1 {
+    letter-spacing: 0.7px;
+    font-weight: 700;
+    color: #0b95ea;
   }
 
   .logo-left {
@@ -34,24 +40,25 @@ export const FormSection = styled.section`
 `;
 
 export const StyledForm = styled.form`
-  max-width: 601px;
+  max-width: 700px;
+  width: 90%;
   height: auto;
   margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #ebfbffe6;
-  // border: 1px solid silver;
-  border-radius: 10px;
-  box-shadow: 0 3px 5px silver;
+  background-color: #f5f5f5; //#ebfbffe6
+  border-radius: 1px;
+  border: 2px solid #141414;
+  box-shadow: 5px 5px 0px black;
 
   @media (width > 768px) {
     padding: 30px 100px;
   }
 
   @media (width > 425px) and (width <= 768px) {
-    padding: 30px 85px;
+    padding: 30px 60px;
   }
   @media (width > 319px) and (width <= 425px) {
     padding: 20px 10px;
@@ -74,13 +81,14 @@ export const StyledForm = styled.form`
     margin: 0;
     text-align: center;
     text-transform: capitalize;
+    color: #333230;
 
     @media (width > 425px) and (width <= 768px) {
-      font-size: 30px;
+      font-size: 33px;
       font-weight: 500;
     }
     @media (width > 319px) and (width <= 425px) {
-      font-size: 33px;
+      font-size: 27px;
       font-weight: 500;
     }
   }
@@ -123,9 +131,10 @@ export const StyledForm = styled.form`
 
     label {
       width: 100%;
-      font-size: 17px;
-      font-weight: 400;
-      letter-spacing: 1px;
+      font-size: 19px;
+      font-weight: 500;
+      color: #0b95ea;
+      letter-spacing: 0.7px;
 
       @media (width >= 320px) and (width <= 425px) {
         font-size: 15px;
@@ -139,11 +148,16 @@ export const StyledForm = styled.form`
       outline: unset;
       border-radius: 1px;
       border: 1px solid #141414;
+      box-shadow: 3px 3px 0 #141414;
+      font-weight: 400;
+      color: #141414;
+      letter-spacing: 1px;
+      transition: all 0.1s ease;
 
       &:focus {
-        background-color: #dbf9ff;
-        border: 1px solid #0b95ea;
-        box-shadow: 0px 0px 2px black;
+        transform: translateX(2px) translateY(2px);
+        border: 1px solid #141414;
+        box-shadow: 0 0 0 #0b95ea;
       }
     }
 
@@ -155,34 +169,43 @@ export const StyledForm = styled.form`
       font-weight: 700;
     }
 
-    .address-input {
+    textarea {
       resize: unset;
-      height: 120px;
+      height: 80px;
       padding: 3px 5px;
       outline: unset;
       background-color: transparent;
       border-radius: 1px;
       border: 1px solid #141414;
+      box-shadow: 3px 3px 0 #141414;
+      color: #141414;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
 
       &:focus,
       &:active {
-        background-color: #dbf9ff;
-        border: 1px solid #0b95ea;
-        box-shadow: 0px 0px 2px black;
+        transform: translateX(3px) translateY(3px);
+        border: 1px solid #141414;
+        box-shadow: 0 0 0 #141414;
       }
     }
 
+    .expectations {
+      height: 120px;
+    }
+
     input::file-selector-button {
-      background-color: #ebfbff;
+      background-color: transparent;
+      margin: 5px;
       outline: unset;
-      border: 1px solid #0b95ea;
+      border: 1px solid #141414;
       border-radius: 1px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       letter-spacing: 0.5px;
 
       &:hover {
-        background-color: #0b95ea;
+        background-color: #141414;
         color: white;
       }
     }
@@ -206,20 +229,26 @@ export const StyledForm = styled.form`
   }
 
   #submit {
-    width: 160px;
+    width: 230px;
     padding: 3px 50px;
     font-size: 1rem;
-    background-color: #0b95ea;
+    background-color: transparent;
+    border: 2px solid #141414;
+    box-shadow: 3px 3px 0 #141414;
     outline: unset;
-    border: unset;
-    border-radius: 5px;
+    border-radius: 1px;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
-    color: #f1fff1;
+    transition: all 0.1s ease;
+    color: #141414;
+
+    @media (width >= 320px) and (width <= 425px) {
+      width: 165px;
+    }
 
     &:hover,
     &:focus {
-      transform: translateY(-3px);
+      transform: translateX(3px) translateY(3px);
+      box-shadow: 0 0 0 #141414;
     }
   }
 `;
