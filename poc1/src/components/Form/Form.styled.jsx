@@ -21,9 +21,8 @@ export const FormSection = styled.section`
     font-size: 50px;
     font-weight: 600;
     color: #141414;
-    
-    @media(width >= 320px) and (width <= 425px)
-    {
+
+    @media (width >= 320px) and (width <= 425px) {
       font-size: 40px;
     }
   }
@@ -46,7 +45,7 @@ export const FormSection = styled.section`
 `;
 
 export const StyledForm = styled.form`
-  max-width: 700px;
+  // max-width: 700px;
   width: 90%;
   height: auto;
   margin: 10px;
@@ -64,7 +63,7 @@ export const StyledForm = styled.form`
   }
 
   @media (width > 425px) and (width <= 768px) {
-    padding: 30px 60px;
+    padding: 30px 10px;
   }
   @media (width > 319px) and (width <= 425px) {
     padding: 20px 10px;
@@ -107,9 +106,11 @@ export const StyledForm = styled.form`
 
     @media (width >319px) and (width <= 425px) {
       display: block;
+      flex-wrap: wrap;
     }
-    @media (width >425px) and (width <= 581px) {
-      display: block;
+    @media (width >425px) and (width <= 768px) {
+      display: flex;
+      flex-wrap: wrap;
     }
   }
 
@@ -139,17 +140,21 @@ export const StyledForm = styled.form`
       width: 100%;
       font-size: 19px;
       font-weight: 500;
-      color: #964B00;
+      color: #964b00;
       letter-spacing: 0.7px;
 
       @media (width >= 320px) and (width <= 425px) {
         font-size: 15px;
       }
+
+      @media (width >= 426px) and (width <= 768px) {
+        font-size: 17px;
+      }
     }
 
     input {
       width: 100%;
-      padding: 3px 5px;
+      padding: 6px;
       background-color: transparent;
       outline: unset;
       border-radius: 1px;
@@ -219,7 +224,7 @@ export const StyledForm = styled.form`
     .preview-holder {
       margin-top: 20px;
       overflow: hidden;
-      width: 90%;
+      width: 30%;
 
       img {
         width: 100%;
@@ -230,7 +235,7 @@ export const StyledForm = styled.form`
   .button-holder {
     margin-top: 10px;
     display: flex;
-    aign-items: center;
+    align-items: center;
     justify-content: center;
   }
 
@@ -246,9 +251,12 @@ export const StyledForm = styled.form`
     letter-spacing: 1px;
     transition: all 0.1s ease;
     color: #141414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media (width >= 320px) and (width <= 425px) {
-      width: 165px;
+      width: 185px;
     }
 
     &:hover,

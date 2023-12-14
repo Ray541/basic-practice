@@ -4,6 +4,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // import axios from "axios";
 import { FormSection, StyledForm } from "./Form.styled";
+import LoaderComponent from "../Loader/LoaderComponent";
+import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.css";
 
 function Form() {
@@ -41,6 +43,8 @@ function Form() {
     phone: false,
     photo: false,
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const validName = (name) => {
     const nameRegx = /^[a-zA-Z]$/;
@@ -108,13 +112,12 @@ function Form() {
   const dbref = collection(storeText, "userInfo");
 
   /**Stores the image in the Firebase Storage --> images/ folder */
-  const storageRef = ref(
-    storeImage,
-    `images/${formData.name}.jpg`
-  );
+  const storageRef = ref(storeImage, `images/${formData.name}.jpg`);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+
     const newError = {
       name:
         formData.name === "" ||
@@ -188,43 +191,61 @@ function Form() {
           Address: formData.address,
           Photo: downloadURL,
         });
+
+        Swal.fire({
+          title: "Success",
+          text: "Send Through What's App Message",
+          icon: "success",
+          confirmButtonText: "Send",
+        }).then(() => {
+          // API to send the data to the intended What's App Number
+          const receiverPhone = data.Phone;
+
+          /**Uses the data variable to send the data through message variable to the What's App No. */
+          const message = `
+  Message from Sumadhwa Matrimony.
+  The Below details are of ${data.Name}.
+  
+  Name: ${data.Name}
+  Father's Name: ${data.FathersName},
+  Mother's Name: ${data.MothersName},
+  Gotra: ${data.Gotra},
+  Nakshatra: ${data.Nakshatra},
+  Rashi: ${data.Rashi},
+  Gana: ${data.Gana},
+  Nadi: ${data.Nadi},
+  Madhwa / Smartha: ${data.MadhwaSmartha},
+  Matha: ${data.Matha},
+  Date and Time of Birth: ${data.DateTimeBirth},
+  Place of Birth: ${data.PlaceBirth},
+  Height: ${data.Height},
+  Qualification: ${data.Qualification},
+  Working Organization: ${data.WorkingOrg},
+  Place of Work: ${data.PlaceWork},
+  Salary: ${data.Salary},
+  Siblings: ${data.Siblings},
+  Phone: ${data.Phone},
+  Expectations: ${data.Expectations},
+  Address: ${data.Address},
+  Photo: ${downloadURL}`;
+          const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
+            message
+          )}`;
+          window.open(whatsappURL);
+        });
       } catch (error) {
-        alert(error);
+        // alert(error);
+        Swal.fire({
+          title: "Error!!",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
         console.log(error);
       }
+      setIsLoading(false);
 
-      // API to send the data to the intended What's App Number
-      const receiverPhone = data.Phone;
-
-      /**Uses the data variable to send the data through message variable to the What's App No. */
-      const message = `
-Name: ${data.Name}
-Father's Name: ${data.FathersName},
-Mother's Name: ${data.MothersName},
-Gotra: ${data.Gotra},
-Nakshatra: ${data.Nakshatra},
-Rashi: ${data.Rashi},
-Gana: ${data.Gana},
-Nadi: ${data.Nadi},
-Madhwa / Smartha: ${data.MadhwaSmartha},
-Matha: ${data.Matha},
-Date and Time of Birth: ${data.DateTimeBirth},
-Place of Birth: ${data.PlaceBirth},
-Height: ${data.Height},
-Qualification: ${data.Qualification},
-Working Organization: ${data.WorkingOrg},
-Place of Work: ${data.PlaceWork},
-Salary: ${data.Salary},
-Siblings: ${data.Siblings},
-Phone: ${data.Phone},
-Expectations: ${data.Expectations},
-Address: ${data.Address},
-Photo: ${downloadURL}`;
-      const whatsappURL = `https://api.whatsapp.com/send?phone=${receiverPhone}&text= ${encodeURIComponent(
-        message
-      )}`;
-      alert("Send through What's App Message");
-      window.open(whatsappURL);
+      // alert("Send through What's App Message");
     }
 
     /**Clears the form and sets the state as empty string */
@@ -279,7 +300,7 @@ Photo: ${downloadURL}`;
         <StyledForm action="" onSubmit={handleSubmit}>
           <h1 className="mt-2 mb-3">Tell us about yourself</h1>
           <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="name-label" htmlFor="name">
                 Name<sup>*</sup>
                 {error.name && (
@@ -297,7 +318,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="fathers-label" htmlFor="fathersname">
                 Father&apos;s Name
               </label>
@@ -310,9 +331,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-10 col-sm-10 col-12">
               <label id="mothers-label" htmlFor="mothersname">
                 Mother&apos;s Name
               </label>
@@ -325,7 +344,9 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+          </div>
+          <div className="two col-lg-12 clo-md-11 col-11">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="gotra-label" htmlFor="gotra">
                 Gotra
               </label>
@@ -338,9 +359,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="nakshatra-label" htmlFor="nakshatra">
                 Nakshatra
               </label>
@@ -353,7 +372,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-10 col-sm-10 col-12">
               <label id="rashi-label" htmlFor="rashi">
                 Rashi
               </label>
@@ -368,7 +387,7 @@ Photo: ${downloadURL}`;
             </div>
           </div>
           <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="gana-label" htmlFor="gana">
                 Gana
               </label>
@@ -381,7 +400,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="nadi-label" htmlFor="nadi">
                 Nadi.
               </label>
@@ -394,9 +413,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-10 col-sm-10 col-12">
               <label id="madhwa-smartha-label" htmlFor="madhwasmartha">
                 Madhwa/ Smartha
               </label>
@@ -409,7 +426,9 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+          </div>
+          <div className="two col-lg-12 clo-md-11 col-11">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="matha-label" htmlFor="matha">
                 Matha.
               </label>
@@ -422,9 +441,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="datetime-birth-label" htmlFor="datetimebirth">
                 Date & Time of Birth
               </label>
@@ -437,7 +454,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-10 col-sm-10 col-12">
               <label id="placebirth-label" htmlFor="placebirth">
                 Place of Birth
               </label>
@@ -452,7 +469,7 @@ Photo: ${downloadURL}`;
             </div>
           </div>
           <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="height-label" htmlFor="height">
                 Height
               </label>
@@ -465,7 +482,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="qualification-label" htmlFor="qualification">
                 Qualification
               </label>
@@ -478,9 +495,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-10 col-sm-10 col-12">
               <label id="workingorg-label" htmlFor="workingorg">
                 Working Organisation
               </label>
@@ -493,7 +508,9 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+          </div>
+          <div className="two col-lg-12 clo-md-11 col-11">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="placeofwork-label" htmlFor="placework">
                 Place of Working
               </label>
@@ -506,9 +523,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="two col-lg-12 clo-md-11 col-11">
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-5 col-sm-10 col-12">
               <label id="salary-label" htmlFor="salary">
                 Salary Per Annum
               </label>
@@ -521,7 +536,7 @@ Photo: ${downloadURL}`;
                 onChange={handleChange}
               />
             </div>
-            <div className="input-holder col-lg-6">
+            <div className="input-holder col-lg-4 col-md-10 col-sm-10 col-12">
               <label id="siblings-label" htmlFor="siblings">
                 Siblings
               </label>
@@ -535,8 +550,8 @@ Photo: ${downloadURL}`;
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-md-10 col-11">
-            <div className="input-holder col-lg-12 col-12">
+          <div className="two col-lg-12 col-md-11 col-11">
+            <div className="input-holder col-lg-12 col-md-10 col-sm-10 col-12">
               <label id="phone-label" htmlFor="phone">
                 What&apos;s App Number<sup>*</sup>
                 {error.phone && (
@@ -555,8 +570,8 @@ Photo: ${downloadURL}`;
               />
             </div>
           </div>
-          <div className="two col-lg-12 col-md-10 col-11">
-            <div className="input-holder col-lg-12 col-12">
+          <div className="two col-lg-12 col-md-11 col-11">
+            <div className="input-holder col-lg-12 col-md-10 col-sm-10 col-12">
               <label id="expectations-label" htmlFor="expectations">
                 Expectations about Groom/Bride
               </label>
@@ -571,8 +586,8 @@ Photo: ${downloadURL}`;
               ></textarea>
             </div>
           </div>
-          <div className="two col-lg-12 col-md-10 col-11">
-            <div className="input-holder col-lg-12 col-12">
+          <div className="two col-lg-12 col-md-11 col-11">
+            <div className="input-holder col-lg-12 col-md-10 col-sm-10 col-12">
               <label id="address-label" htmlFor="address">
                 Address
               </label>
@@ -587,8 +602,8 @@ Photo: ${downloadURL}`;
               ></textarea>
             </div>
           </div>
-          <div className="two col-lg-12 col-md-10 col-11">
-            <div className="last-input-holder input-holder col-lg-12 col-12">
+          <div className="two col-lg-12 col-md-11 col-11">
+            <div className="last-input-holder input-holder col-lg-12 col-md-10 col-sm-10 col-12">
               <label id="file-label" htmlFor="upload-file">
                 Upload Photo in 4:5 Ratio<sup>*</sup>
                 {error.photo && <span className="error-message">Required</span>}
@@ -610,6 +625,7 @@ Photo: ${downloadURL}`;
           <div className="button-holder col-lg-12 col-md-11 col-sm-10 col-10">
             <button id="submit" name="submit">
               Submit
+              {isLoading && <LoaderComponent />}
             </button>
           </div>
         </StyledForm>

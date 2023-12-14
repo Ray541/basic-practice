@@ -1,5 +1,6 @@
 // import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import LoaderComponent from "../Loader/LoaderComponent";
 import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import {
@@ -28,6 +29,7 @@ import {
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storeImage } from "../../firebaseConfig";
+import Swal from "sweetalert2";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDOusYzC-DiSJeWG1iXJDFe2qW6OmWozk",
@@ -143,13 +145,10 @@ function UserModal({ isOpen, onClose, user }) {
       }
       await updateUserInFirestore(formData.phone || user.Phone, updatedData);
       setUserData({ ...userData, ...updatedData });
-      setIsEditing(false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error updating user data:", error);
-    } finally {
-      setIsLoading(false);
     }
-    setIsEditing(false);
   };
 
   /**Function to add the watermark to the uploaded image
@@ -224,12 +223,32 @@ function UserModal({ isOpen, onClose, user }) {
         const userDoc = querySnapshot.docs[0];
         await updateDoc(doc(firestore, "userInfo", userDoc.id), updatedData);
         // setUserData({ ...userData, ...updatedData });
-        alert("User data updated successfully");
+        // alert("User data updated successfully");
+        Swal.fire({
+          title: "Success!",
+          text: "User Data Updated Successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setIsEditing(false);
+        });
       } else {
-        console.log("User not found.");
+        // console.log("User not found.");
+        Swal.fire({
+          title: "Error!",
+          text: "User not found",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       }
     } catch (error) {
       console.error("Error updating user data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: `Error updating user data: ${error}`,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
@@ -534,6 +553,7 @@ function UserModal({ isOpen, onClose, user }) {
             <FieldsHolder>
               <InputHolder className="input-holder mb-2 col-lg-3">
                 <SaveButton type="submit">
+                  {isLoading && <LoaderComponent />}
                   Save Changes<i className="bi bi-check2-square ms-1"></i>
                 </SaveButton>
               </InputHolder>
@@ -629,11 +649,6 @@ function UserModal({ isOpen, onClose, user }) {
               {userData.Address}
             </DetailsSpan>
           </ViewDetails>
-        )}
-        {isLoading && (
-          <div className="loader-container">
-            <div className="loader"></div>
-          </div>
         )}
       </StyledUserModel>
     </>

@@ -24,7 +24,7 @@ import {
   deleteDoc,
   getDocs,
 } from "firebase/firestore";
-// import { storeImage } from "../../firebaseConfig";
+import Swal from "sweetalert2";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDOusYzC-DiSJeWG1iXJDFe2qW6OmWozk",
@@ -76,9 +76,21 @@ function UserCard({ user }) {
         await deleteObject(userImageRef);
         await deleteObject(UpdateduserImageRef);
       });
-      alert("User Deleted Successfully.");
+      // alert("User Deleted Successfully.");
+      Swal.fire({
+        title: "Success!",
+        text: "User Deleted Successfully",
+        icon: "success",
+        confirmButtonText: "OK",
+      })
     } catch (error) {
-      alert("Error deleting the user: ", error);
+      // alert("Error deleting the user: ", error);
+      Swal.fire({
+        title: "Error!",
+        text: `Error deleting the user: ${error}`,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 

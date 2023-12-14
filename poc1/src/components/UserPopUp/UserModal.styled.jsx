@@ -127,6 +127,7 @@ export const DiscardButton = styled.button`
 `;
 
 export const SaveButton = styled.button`
+  position: relative;
   width: 100%;
   outline: unset;
   border: unset;
@@ -137,6 +138,9 @@ export const SaveButton = styled.button`
   padding: 5px 0;
   transition: all 0.3s ease;
   letter-spacing: 0.7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover,
   &:focus {
