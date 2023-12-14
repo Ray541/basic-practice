@@ -7,7 +7,7 @@ export const FormSection = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #fff; //#ffe1a8
+  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
   padding: 30px 0;
 
   .logo-left,
@@ -17,15 +17,21 @@ export const FormSection = styled.section`
   }
 
   h1 {
-    letter-spacing: 0.7px;
-    font-weight: 700;
-    color: #0b95ea;
+    letter-spacing: 0.5 px;
+    font-size: 50px;
+    font-weight: 600;
+    color: #141414;
+    
+    @media(width >= 320px) and (width <= 425px)
+    {
+      font-size: 40px;
+    }
   }
 
   .logo-left {
     @media (width >= 320px) and (width <= 425px) {
       width: 50px;
-      margin: 0;
+      margin-right: 10px;
     }
   }
 
@@ -133,7 +139,7 @@ export const StyledForm = styled.form`
       width: 100%;
       font-size: 19px;
       font-weight: 500;
-      color: #0b95ea;
+      color: #964B00;
       letter-spacing: 0.7px;
 
       @media (width >= 320px) and (width <= 425px) {

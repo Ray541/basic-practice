@@ -83,6 +83,13 @@ export const UserImage = styled.div`
   }
 `;
 
+export const ActionButtons = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const ViewMore = styled.button`
   cursor: pointer;
   padding: 5px 10px;
@@ -97,7 +104,26 @@ export const ViewMore = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #5497fe;
+    background-color: #6fae63;
     transform: translateX(3px);
+  }
+`;
+
+export const DeleteUser = styled.button`
+  cursor: pointer;
+  padding: 5px 10px;
+  outline: unset;
+  border: unset;
+  border-radius: 3px;
+  // background-color: #4689f3;
+  background-color: #5497fe;
+  color: #f1f1f1;
+  transition: all 0.3s ease;
+  letter-spacing: 0.7px;
+
+  &:hover,
+  &:focus {
+    background-color: #FE0000;
+    transform: translateX(-3px);
   }
 `;

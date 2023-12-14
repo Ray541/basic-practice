@@ -175,7 +175,7 @@ export const ViewUserPhoto = styled.div`
 
   img {
     width: 100%;
-    transition: all 0.2s ease;
+    transition: all 0.4s ease;
 
     &:hover {
       transform: scale(1.05);

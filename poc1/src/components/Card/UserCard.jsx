@@ -8,18 +8,23 @@ import {
   UserName,
   UserImage,
   UserPhone,
+  ActionButtons,
   ViewMore,
+  DeleteUser,
 } from "./UserCard.styled";
 import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { deleteObject, getStorage, ref } from "firebase/storage";
 import {
   onSnapshot,
   query,
   where,
   collection,
   getFirestore,
+  deleteDoc,
+  getDocs,
 } from "firebase/firestore";
+// import { storeImage } from "../../firebaseConfig";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDOusYzC-DiSJeWG1iXJDFe2qW6OmWozk",
@@ -37,12 +42,44 @@ function UserCard({ user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedUser, setUpdatedUser] = useState(user);
 
+  /**Function for Opening the Modal */
   const openModal = () => {
     setIsModalOpen(true);
   };
 
+  /**Function for Closing the Modal */
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  /**Function for DeleteUser from Firestore */
+  const deleteUser = async () => {
+    try {
+      const userRef = collection(firestore, "userInfo");
+
+      // Create a query to get the document with the Phone number as the unique identifier
+      const q = query(userRef, where("Phone", "==", user.Phone));
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach(async (doc) => {
+        // Delete the user document from the firebase firestore
+        await deleteDoc(doc.ref);
+
+        const storeImage = getStorage(app);
+        // Delete the first user image from Firebase Storage
+        const userImageRef = ref(storeImage, `images/${user.Name}.jpg`);
+        // Delete the updated user image from Firebase Storage
+        const UpdateduserImageRef = ref(
+          storeImage,
+          `images/${user.Name}UpdatedImage.jpg`
+        );
+        await deleteObject(userImageRef);
+        await deleteObject(UpdateduserImageRef);
+      });
+      alert("User Deleted Successfully.");
+    } catch (error) {
+      alert("Error deleting the user: ", error);
+    }
   };
 
   useEffect(() => {
@@ -80,9 +117,14 @@ function UserCard({ user }) {
           />
         </UserImage>
         <UserPhone>{updatedUser.Phone}</UserPhone>
-        <ViewMore onClick={openModal}>
-          <i className="bi bi-door-closed-fill me-1"></i>All Details
-        </ViewMore>
+        <ActionButtons>
+          <ViewMore onClick={openModal}>
+            <i className="bi bi-door-closed-fill me-1"></i>All Details
+          </ViewMore>
+          <DeleteUser onClick={deleteUser}>
+            <i className="bi bi-trash2-fill me-1"></i>Delete User
+          </DeleteUser>
+        </ActionButtons>
       </UserCardWrapper>
       <UserModel user={updatedUser} isOpen={isModalOpen} onClose={closeModal} />
     </>

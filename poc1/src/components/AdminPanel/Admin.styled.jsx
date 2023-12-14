@@ -46,6 +46,7 @@ export const UserList = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  
   @media (width <= 768px) {
     margin-top: 10px;
   }

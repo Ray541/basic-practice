@@ -104,13 +104,13 @@ function Form() {
     }
   };
 
-  /**stores the data in Firebase Firestore userInfo Collection */
+  /**Stores the data in Firebase Firestore --> userInfo Collection */
   const dbref = collection(storeText, "userInfo");
 
-  /**stores the image in the Firebase Storage in images folder */
+  /**Stores the image in the Firebase Storage --> images/ folder */
   const storageRef = ref(
     storeImage,
-    `images/${formData.name}_${Date.now()}.jpg`
+    `images/${formData.name}.jpg`
   );
 
   const handleSubmit = async (event) => {
@@ -153,6 +153,7 @@ function Form() {
       Photo: formData.photo,
     };
 
+    /**Set of code which will run if the Validation is Satisfied */
     if (!newError.name && !newError.phone && !newError.photo) {
       /**Store the dataUrl to [firebase storage] */
       const snapshot = await uploadBytes(storageRef, formData.photo);

@@ -45,6 +45,7 @@ getStorage(app);
 function UserModal({ isOpen, onClose, user }) {
   const [isEditing, setIsEditing] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -76,6 +77,7 @@ function UserModal({ isOpen, onClose, user }) {
   }, [user]);
 
   const handelCloseClick = () => {
+    setPreview(null);
     setIsEditing(false);
     onClose();
   };
@@ -84,20 +86,23 @@ function UserModal({ isOpen, onClose, user }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const fileInputRef = useRef(null);
-
   const handelEditClick = () => {
     setIsEditing(true);
   };
 
+  const fileInputRef = useRef(null);
+
   const handleCancelClick = () => {
     setIsEditing(false);
+    setPreview(null);
   };
 
+  /**Stores the user entered data */
   const [userData, setUserData] = useState(user);
 
   const handleSaveClick = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const updatedData = {
       Name: formData.name || "",
@@ -131,7 +136,7 @@ function UserModal({ isOpen, onClose, user }) {
         /**If a new photo is uploaded, update the storage */
         const storageRef = ref(
           storeImage,
-          `images/${formData.name}_${Date.now()}.jpg`
+          `images/${formData.name}UpdatedImage.jpg`
         );
         await uploadBytes(storageRef, blob);
         updatedData.Photo = await getDownloadURL(storageRef); //get downloadURL for the image to store it
@@ -141,11 +146,16 @@ function UserModal({ isOpen, onClose, user }) {
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating user data:", error);
+    } finally {
+      setIsLoading(false);
     }
     setIsEditing(false);
   };
 
-  /**Function to add the watermark to the uploaded image */
+  /**Function to add the watermark to the uploaded image
+   * @param ,uploadedImage
+   * @returns Uploaded Image with Watermark
+   */
   const createWatermarkedBlob = (uploadedImage) => {
     return new Promise((resolve) => {
       const img = new Image();
@@ -200,7 +210,10 @@ function UserModal({ isOpen, onClose, user }) {
     photo: null,
   });
 
-  /**Function to update the data in the Firebase Storage */
+  /**Function to update the data in the Firebase Storage
+   * @param ,identifier, updateData
+   * @return updated a perticular user in firebase database
+   */
   const updateUserInFirestore = async (identifier, updatedData) => {
     try {
       const usersRef = collection(firestore, "userInfo");
@@ -616,6 +629,11 @@ function UserModal({ isOpen, onClose, user }) {
               {userData.Address}
             </DetailsSpan>
           </ViewDetails>
+        )}
+        {isLoading && (
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
         )}
       </StyledUserModel>
     </>
