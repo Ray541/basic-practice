@@ -1,0 +1,128 @@
+ - What is typescript?
+-->
+    - TypeScript is the superset of javascript and is statically typed and needs a compiler to be executed.
+    - It needs coimpiler because the browser only understands javascript so if we use typescript we need to convert it to javascript first and then execute it in the browser.
+    - Allows scrict types i.e if i declare a variable as a number then i cannot use it again as a string or any other type variable.
+        Eg: let x = "Pranav;
+            normally we can use let x again in javascript
+            but in TypeScript,
+
+            let x = "Pranav"
+
+            let x  = 10 is not allowed it gives error that 
+
+ - watch mode?
+-->
+    - In this if we dont use react and just basic html, css and js or ts file.
+    - Then is we make any change in the ts file we have to update it in the js file so we use the tsc file_name to update the javascript file.
+    - It has to be done every other time so to update the ts file automatically then we need to use the
+    tsc -w command.
+
+ - Strict type?
+-->
+    - We have to specify the type of the variable in ts.
+    - Eg: let age: number = 22;
+        here the age variable id always number
+        we cannot change the type but we can change the value of the variable
+
+        i.e: age = 23 is fine but,
+             age = "Pranav" not fine error in ts
+
+ - Object and Array?
+-->
+    - two methods to declare the object in ts
+    by using the user defined method i.e:
+        let Person = {              |
+            name: string,           |
+            age: number,            | this a Explicite Object i.e diclare the objecut and use it in future
+            position: string        |
+        }                           |
+
+        const person: Person {
+            name: "acvds",
+            age: 22,
+            position: "Intern",
+        }
+
+    - arrays also needs to be type specified
+    but we can also declare arrays of different types like string and numbers and booleans etc
+
+    Eg: 
+        let person: (string | number)[] = [];
+        
+        person = ["Pranav", 22];
+
+        or
+
+        const person: (string | number)[] = ["Pranav", 22];
+
+ - Function?
+-->
+    - we have to define the return type of the function
+    - void means it returns nothing and number means it returns some number value
+
+ - 
+-->
+    Union type for variables that can be either a number or a string
+
+    let myVar: number | string; ---> this is an Union type
+
+    myVar = 10;       Valid
+    myVar = "Hello";  Valid
+    myVar = true;     Error, as boolean is not part of the union type
+
+ - Type Aliases?
+-->
+    - we can use the type keyword and mention the type of the parameters of the function or the return type of the function
+    - Eg:
+        - const loginDetails = (uid : string | number, username: string) => {}
+
+        here we can make a type aliases and use it where ever we want to this clean up's the code and makes it more redable.
+
+ - Function Aliases?
+--> 
+    - function to add to numbers: -
+        type addition: (a:number, b:number) => void; ---> function aliases
+        
+        const addition = (a:number, b: number) => {
+            console.log(a + b);
+        }
+        addition(2, 2)
+    
+    In above example there is a use of Signatures
+
+ - DOM and Type Casting?
+-->
+    - In typescript if we use any elements we can type cast it.
+    - Eg:-
+          - if we select let's say anchor tag or a form tag using it's id or the class it is considered as an element not a form element.
+          - we can inform the compiler by changing its type.
+          - in typescript we can typecast the elements because the elements knows it's types
+          - we can change the normal HTMLElements to HTMLFormElements.
+
+    - Typecasting in TypeSript:-
+          - in typescript for typecasting the as operator is used
+          - Syntax: 
+                    variable / experssion as Type
+
+ - Class and Public Private and Readonly?
+-->
+    - classes are same as other programming languges helps in Encapsualtion, Inheritence and Polymorphism and.
+    - we can use constructors to pass the properties to the child component
+    - Type cast same as other languages used to change the type of a variable of experssion.
+    - e.g:-
+            - string to number ->
+
+            age: string,
+            here age is string type before typecasting
+
+            console.log(age as number)
+            here age is number type after typecasting
+
+ - Enums?
+-->
+    - we can associate a index or a number to a value to be returned
+
+ - Tuples ?
+-->
+    - Like an array but the value should match the type in the touple so once each position is defined then it cannot have a value of another type    
