@@ -25,6 +25,8 @@
     "react-bootstrap-icons": "^1.10.3",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^6.1.0",
+    "react-router": "^6.21.1",
+    "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.1",
     "sweetalert2": "^11.10.1",
     "twilio": "^4.19.3",
