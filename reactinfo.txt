@@ -66,4 +66,8 @@ react: to write in react language
 react-dom: for routing purpose
 
  - useState?
--->     
+-->     variable with the state setState Function. it's a hook which is used to update the values in the state in react.
+        eg:-
+            import {useState} from "react"
+            
+            const [state, setState] = useState();
