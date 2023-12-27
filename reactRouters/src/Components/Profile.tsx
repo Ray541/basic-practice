@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { Route, Redirect } from 'react-router-dom'
 
 const Profile = () => {
     return (
@@ -14,9 +13,9 @@ const Profile = () => {
 export default Profile
 
 const StyledProfile = styled.div`
-    width: 50%;
-    height: 400px;
-    background-color: silver;
+    width: 100%;
+    height: 100vh;
+    background-color: #dadada;
     display: flex;
     align-items: center;
     justify-content: center;

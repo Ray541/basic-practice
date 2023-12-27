@@ -1,20 +1,38 @@
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Protected from "./Protected";
 import Navbar from "./Components/Navbar"
 import Home from "./Components/Home"
 import About from "./Components/About"
 import Services from "./Components/Services"
 import Profile from './Components/Profile';
+
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const logIn = () => {
+    setIsLoggedIn(true);
+  };
+  const logOut = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
     <Router>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} login={logIn} logout={logOut}/>
       <Routes>
-        <Route path='/' Component={Home} />
+        <Route path='/' element={<Home />} />
         <Route path='/about' Component={About} />
         <Route path='/services' Component={Services} />
+        <Route path='/profile'
+          element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <Profile />
+            </Protected>
+          }
+        />
+        {/* <Route path='/profile' Component={Profile} /> */}
       </Routes>
-        <Profile />
     </Router>
   )
 }

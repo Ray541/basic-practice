@@ -3,18 +3,31 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { StyledButton } from './Button'
 
-const Navbar = () => {
+interface NavbarProps {
+    isLoggedIn: boolean;
+    login: () => void;
+    logout: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, login, logout }) => {
+
     return (
         <NavbarStyled>
             <Ul>
                 <Li to="/">Home</Li>
                 <Li to="/about">About</Li>
                 <Li to="/services">Services</Li>
+                <Li to="/profile">Profile</Li>
             </Ul>
             <ButtonHolder>
-                <StyledButton>
+                {isLoggedIn ? (
+                    <StyledButton onClick={logout}>
+                        Log Out
+                    </StyledButton>
+
+                ) : (<StyledButton onClick={login}>
                     Log In
-                </StyledButton>
+                </StyledButton>)}
             </ButtonHolder>
         </NavbarStyled>
     )
