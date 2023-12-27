@@ -17,6 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, login, logout }) => {
                 <Li to="/">Home</Li>
                 <Li to="/about">About</Li>
                 <Li to="/services">Services</Li>
+                <Li to="/registration">Registration</Li>
                 <Li to="/profile">Profile</Li>
             </Ul>
             <ButtonHolder>
@@ -37,7 +38,7 @@ export default Navbar
 
 
 const NavbarStyled = styled.div`
-    padding: 5px 0 5px 0;
+    padding: 15px 0 15px 0;
     border-bottom: 1px solid silver;
     display: flex;
     align-items: center;
@@ -59,8 +60,10 @@ const Li = styled(Link)`
     letter-spacing: 0.7px;
     font-family: 'Gilroy-Bold', sans-serif;
     transition: color .2s ease;
+    outline: unset;
 
-    &:hover{
+    &:hover,
+    &:focus{
         color: #DD9624;
     }
 `;

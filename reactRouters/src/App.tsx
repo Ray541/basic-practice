@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Protected from "./Protected";
+import Protected from "./Components/Protected";
 import Navbar from "./Components/Navbar"
 import Home from "./Components/Home"
 import About from "./Components/About"
 import Services from "./Components/Services"
+import Registration from './Components/Registration';
 import Profile from './Components/Profile';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/about' Component={About} />
         <Route path='/services' Component={Services} />
+        <Route path='/registration' Component={Registration} />
         <Route path='/profile'
           element={
             <Protected isLoggedIn={isLoggedIn}>
