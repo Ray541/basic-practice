@@ -26,38 +26,41 @@ const Registration = () => {
 
 
   return (
-    <StyledRegisterationForm onSubmit={handleSubmit}>
-      <InputDivs>
-        <input type="text" id='name' name='name' autoComplete='off' value={values.name} onBlur={handleBlur} onChange={handleChange} />
-        <label htmlFor="name">Name</label>
-        {errors.name && touched.name && <p style={{color: "red", marginTop: "5px"}}>{errors.name}</p>}
-      </InputDivs>
-      <InputDivs>
-        <input type="email" id='email' name='email' autoComplete='off' value={values.email} onBlur={handleBlur} onChange={handleChange} />
-        <label htmlFor="email">Email</label>
-        {errors.email && touched.email && <p style={{color: "red", marginTop: "5px"}}>{errors.email}</p>}
-      </InputDivs>
-      <InputDivs>
-        <input type="text" id='username' name='username' autoComplete='off' value={values.username} onBlur={handleBlur} onChange={handleChange} />
-        <label htmlFor="username">Username</label>
-        {errors.username && touched.username && <p style={{color: "red", marginTop: "5px"}}>{errors.username}</p>}
-      </InputDivs>
-      <InputDivs>
-        <input type="text" id='password' name='password' autoComplete='off' value={values.password} onBlur={handleBlur} onChange={handleChange} />
-        <label htmlFor="password">Password</label>
-        {errors.password && touched.password && <p style={{color: "red", marginTop: "5px"}}>{errors.password}</p>}
-      </InputDivs>
-      <InputDivs>
-        <input type="text" id='cpassword' name='cpassword' autoComplete='off' value={values.cpassword} onBlur={handleBlur} onChange={handleChange} />
-        <label htmlFor="cpassword">Confirm Password</label>
-        {errors.cpassword && touched.cpassword && <p style={{color: "red", marginTop: "5px"}}>{errors.cpassword}</p>}
-      </InputDivs>
-      <InputDivs>
-        <StyledButton type='submit' id='form-sumbit-button'>
-          Submit
-        </StyledButton>
-      </InputDivs>
-    </StyledRegisterationForm>
+    <>
+    <h1 style={{width: "100%", paddingTop: "50px", textAlign: "center"}}>Registration Form</h1>
+      <StyledRegisterationForm onSubmit={handleSubmit}>
+        <InputDivs>
+          <input type="text" id='name' name='name' autoComplete='off' value={values.name} onBlur={handleBlur} onChange={handleChange} />
+          <label htmlFor="name">Name</label>
+          {errors.name && touched.name && <p style={{ color: "red", marginTop: "5px" }}>{errors.name}</p>}
+        </InputDivs>
+        <InputDivs>
+          <input type="email" id='email' name='email' autoComplete='off' value={values.email} onBlur={handleBlur} onChange={handleChange} />
+          <label htmlFor="email">Email</label>
+          {errors.email && touched.email && <p style={{ color: "red", marginTop: "5px" }}>{errors.email}</p>}
+        </InputDivs>
+        <InputDivs>
+          <input type="text" id='username' name='username' autoComplete='off' value={values.username} onBlur={handleBlur} onChange={handleChange} />
+          <label htmlFor="username">Username</label>
+          {errors.username && touched.username && <p style={{ color: "red", marginTop: "5px" }}>{errors.username}</p>}
+        </InputDivs>
+        <InputDivs>
+          <input type="text" id='password' name='password' autoComplete='off' value={values.password} onBlur={handleBlur} onChange={handleChange} />
+          <label htmlFor="password">Password</label>
+          {errors.password && touched.password && <p style={{ color: "red", marginTop: "5px" }}>{errors.password}</p>}
+        </InputDivs>
+        <InputDivs>
+          <input type="text" id='cpassword' name='cpassword' autoComplete='off' value={values.cpassword} onBlur={handleBlur} onChange={handleChange} />
+          <label htmlFor="cpassword">Confirm Password</label>
+          {errors.cpassword && touched.cpassword && <p style={{ color: "red", marginTop: "5px" }}>{errors.cpassword}</p>}
+        </InputDivs>
+        <InputDivs>
+          <StyledButton type='submit' id='form-sumbit-button'>
+            Submit
+          </StyledButton>
+        </InputDivs>
+      </StyledRegisterationForm>
+    </>
   )
 }
 
@@ -69,7 +72,7 @@ const StyledRegisterationForm = styled.form`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 75vh;
 `;
 
 const InputDivs = styled.div`
