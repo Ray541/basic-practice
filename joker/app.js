@@ -7,11 +7,13 @@ const getJoke = async () => {
   const raw = await fetch(url);
   const data = await raw.json();
 
-  if (data.joke === undefined && data.setup === undefined && data.delivery) {
-    return (joke.innerHTML = "Click Again!!!");
-  } else if (data.setup && data.delivery) {
-    return (joke.innerHTML = `${data.setup + data.delivery}`);
+  const { joke: onlyJoke, setup, delivery } = data;
+
+  if (onlyJoke === undefined && setup === undefined && delivery === undefined) {
+    return (joke.textContent = "Click Again!!!");
+  } else if (setup && delivery) {
+    return (joke.innerHTML = `${setup + delivery}`);
   } else {
-    return (joke.innerHTML = `${data.joke}`);
+    return (joke.textContent = `${onlyJoke}`);
   }
 };
